@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>2020/02/27/js-closure/</loc>
+    
+    <lastmod>2020-02-27T08:06:32.796Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>2020/02/26/HeapSort/</loc>
     
-    <lastmod>2020-02-26T06:08:59.341Z</lastmod>
+    <lastmod>2020-02-27T07:00:04.159Z</lastmod>
     
   </url>
   
@@ -23,14 +30,14 @@
   </url>
   
   <url>
-    <loc>google2bb66ed419f131eb.html</loc>
+    <loc>baidu_verify_A0BCVY6uXW.html</loc>
     
     <lastmod>2020-01-11T08:50:19.199Z</lastmod>
     
   </url>
   
   <url>
-    <loc>baidu_verify_A0BCVY6uXW.html</loc>
+    <loc>google2bb66ed419f131eb.html</loc>
     
     <lastmod>2020-01-11T08:50:19.199Z</lastmod>
     

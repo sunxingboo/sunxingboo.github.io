@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>//codernote.top/2020/02/27/js-closure/</loc>
+    <lastmod>2020-02-27</lastmod>
+  </url>  <url>
     <loc>//codernote.top/2020/02/26/HeapSort/</loc>
-    <lastmod>2020-02-26</lastmod>
+    <lastmod>2020-02-27</lastmod>
   </url>  <url>
     <loc>//codernote.top/2020/01/16/TCP_three_shake_hands/</loc>
     <lastmod>2020-01-19</lastmod>
