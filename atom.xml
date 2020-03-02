@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="//codernote.top/"/>
-  <updated>2020-02-27T08:06:32.796Z</updated>
+  <updated>2020-03-02T10:51:28.615Z</updated>
   <id>//codernote.top/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker build 的上下文目录</title>
+    <link href="2020/03/02/dockerfile/"/>
+    <id>2020/03/02/dockerfile/</id>
+    <published>2020-03-01T16:00:00.000Z</published>
+    <updated>2020-03-02T10:51:28.615Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ docker build -t <span class="built_in">test</span>:1 .</span></pre></td></tr></table></figure><p>这条命令最后的<code>.</code>指当前目录，<code>docker</code>引擎会解析目录下名为<code>Dockerfile</code>的文件并执行其中的命令。也可以指定特定文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ docker build -t <span class="built_in">test</span>:1 -f &lt;filepath&gt; .</span></pre></td></tr></table></figure><p>但其实这里的<code>.</code>实际上指的是<code>docker</code>引擎执行构建命令时的上下文目录。</p><p>执行这条命令后首先会将此指定的目录下的所有内容打包发送给<code>docker</code>引擎，也就是说这个上下文目录与<code>Dockerfile</code>目录可以分开指定。</p><p>为了避免发送不必要的文件，可以使用<code>.dockerignore</code>来添加忽略文件。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;l
+      
+    
+    </summary>
+    
+    
+    
+      <category term="docker" scheme="//codernote.top/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaScript闭包</title>
