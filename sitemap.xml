@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>2020/03/05/compress/</loc>
+    
+    <lastmod>2020-03-05T08:19:13.823Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>2020/03/04/linux-find/</loc>
+    
+    <lastmod>2020-03-05T08:18:04.243Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>2020/03/02/dockerfile/</loc>
     
     <lastmod>2020-03-02T10:51:28.615Z</lastmod>

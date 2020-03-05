@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>Tag: JavaScript | 码农笔记</title>
+  <title>linux的几种压缩工具 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
-<meta name="keywords" content="后端,Linux,算法,数据结构,前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码农笔记">
-<meta property="og:url" content="tags&#x2F;JavaScript&#x2F;index.html">
+  <meta name="description" content="总结一下Linux下的几种压缩及打包工具">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux的几种压缩工具">
+<meta property="og:url" content="2020&#x2F;03&#x2F;05&#x2F;compress&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
+<meta property="og:description" content="总结一下Linux下的几种压缩及打包工具">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-05T08:19:13.823Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -154,60 +155,195 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-compress" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/27/js-closure/" class="archive-article-date">
-  	<time datetime="2020-02-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/27/js-closure/">JavaScript闭包</a>
+    <h1 class="article-title" itemprop="name">
+      linux的几种压缩工具
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="2020/03/05/compress/" class="archive-article-date">
+  	<time datetime="2020-03-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>总结一下<code>Linux</code>下的几种压缩及打包工具</p>
+<a id="more"></a>
+
+<h2 id="compress"><a href="#compress" class="headerlink" title="compress"></a>compress</h2><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-f 强制执行并覆盖掉原文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-b 压缩效率，9～16，默认值为16</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-d 解压缩，也可以使用uncompress命令</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-v 显示命令执行过程</span></span></pre></td></tr></table></figure>
+
+<p>压缩生成<code>.Z</code>后缀名的文件，解压时也需要文件后缀为<code>.Z</code></p>
+<h2 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h2><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-v 显示命令执行过程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-q 不显示命令执行过程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-r 递归处理目录</span></span></pre></td></tr></table></figure>
+
+<p>使用<code>unzip</code>解压缩<code>zip</code>压缩的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ zip test.zip test.txt //把test.txt压缩为test.zip，可以接更多的文件或者文件夹</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ unzip test.zip</span></pre></td></tr></table></figure>
+
+<p>在压缩时若不指定后缀名，则生成的压缩文件默认为<code>.zip</code>，若指定了后缀名，则生成的文件名为所指定的，不会自动添加上<code>.zip</code></p>
+<p>在使用<code>unzip</code>解压缩时，不需要文件的后缀名为<code>.zip</code>，只需要是<code>zip</code>压缩类型的文件</p>
+<h2 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h2><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-f 强制压缩文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-q 不显示警告信息</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-v 显示命令执行过程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-d 解压，也可以使用uncompress命令</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-r 递归处理目录</span></span></pre></td></tr></table></figure>
+
+<p>压缩后会生成以<code>.gz</code>为后缀的文件，并且在使用<code>gzip -d</code>或<code>gunzip</code>命令解压文件时，文件必须为以<code>.gz</code>为后缀并且是<code>gzip</code>压缩类型饿文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ gzip ./*</span></pre></td></tr></table></figure>
+
+<p>假设当前目录下有<code>test1 test2</code>两个文件，则这条命令会将这两个文件压缩为<code>test1.gz test2.gz</code></p>
+<h2 id="bzip2"><a href="#bzip2" class="headerlink" title="bzip2"></a>bzip2</h2><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-c 将压缩与解压缩的结果输出到标准输出</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-f 默认情况下在压缩与解压缩时，若输出文件与现有文件同名，不会覆盖现有文件。若要覆盖，则可以使用此参数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-d 解压缩，也可以使用bunzip2命令解压</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-v 显示压缩与解压缩的详细信息</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-k 默认情况下bzip2压缩或解压缩后会删除原文件，所想保留原文件，则可以使用此选项</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-z 强制执行压缩</span></span></pre></td></tr></table></figure>
+
+<p>压缩后会生成以<code>.bz2</code>为后缀的文件，使用<code>bzip2 -d</code>或<code>bunzip2</code>命令解压文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">//假设当前目录有两个文件名为 data1 data2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ bzip2 ./*							//经过压缩生成 data1.bz2 data2.bz2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ bzip2 -d data1.bz2		//data1.bz2被解压为data1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ mv data2.bz2 data2    //这里将另一个压缩文件重命名去除.bz2后缀</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">$ bzip2 -d data2				//由于不是.bz2后缀，这里猜测不到原始文件名，默认解压后文件名为data2.out</span></pre></td></tr></table></figure>
+
+<p>如上述命令，解压<code>bzip2</code>压缩类型文件不强制要求后缀为<code>.bz2</code>。解压时，若后缀名为<code>.bz2</code>，则解压后文件名为去除<code>.bz2</code>的文件名，若后缀不是<code>.bz2</code>，则解压后文件名为原文件名加上<code>.out</code>后缀</p>
+<h2 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h2><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-c 打包文件和目录</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-C 在指定的目录解压缩</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-x 还原文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-z 在打包的同时使用gzip进行压缩或解压（与-c同时使用时是压缩，与-x同时使用时是解压）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-Z 在打包的同时使用compress进行压缩或解压（与-c同时使用时是压缩，与-x同时使用时是解压）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-j 在打包的同时使用bzip2进行压缩或解压（与-c同时使用时是压缩，与-x同时使用时是解压）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-v 显示命令执行过程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-f 指定文件名</span></span></pre></td></tr></table></figure>
+
+<p><code>compress</code>、<code>zip</code>、<code>gzip</code>、<code>bzip2</code>命令是对文件进行压缩。而<code>tar</code>命令是对文件或目录进行打包操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ tar -cvf test.tar ./*					//这里将当前目录下的所有文件和目录打包为test.tar文件</span></pre></td></tr></table></figure>
+
+<p>这里可以任意指定文件名和后缀，并不需要强制指定<code>.tar</code>后缀</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ tar -zcvf test.tar.gz ./*			//这里将当前目录下的所有文件和目录打包为test.tar文件后又进行了gzip压缩</span></pre></td></tr></table></figure>
+
+<p>这里的文件名也是可以任意指定的，处理完成后是<code>gzip</code>压缩的文件。</p>
+<p>如果这里命名的文件名不是以<code>.gz</code>为后缀，如<code>test</code>，若要直接进行<code>gunzip</code>解压之前必须要将文件的后缀改为<code>test.gz</code>，解压后文件是名为<code>test</code>的<code>tar</code>归档文件，接下来可以使用<code>tar -xvf test</code> 来恢复。</p>
+<p>上述两步操作也可以用<code>tar -zxvf test</code>一步操作来完成</p>
+<p>使用<code>-Z</code>、<code>-j</code>选项的命令与之类似</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">JavaScript</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/05/compress/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="2020/03/04/linux-find/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">find命令使用笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#compress"><span class="toc-number">1.</span> <span class="toc-text">compress</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-number">2.</span> <span class="toc-text">zip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gzip"><span class="toc-number">3.</span> <span class="toc-text">gzip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bzip2"><span class="toc-number">4.</span> <span class="toc-text">bzip2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tar"><span class="toc-number">5.</span> <span class="toc-text">tar</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -230,9 +366,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
