@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>PHP `??` 与 `?:` 操作符的区别 | 码农笔记</title>
+  <title>shell位置参数 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="?? 操作符是 PHP 7 引入的特性，它的使用方式与 ?: 的区别总结如下： 1&amp;lt;?php2  $str &#x3D; &quot;&quot;;3  $arr &#x3D; [&quot;b&quot; &#x3D;&amp;gt; 0, &quot;c&quot; &#x3D;&amp;gt; null];4  $test1 &#x3D; $str ?? &quot;test1&quot;;5  $test2 &#x3D; $str ?: &quot;test2&quot;;6  $test3 &#x3D; $arr[&quot;a&quot;] ?? &quot;test3&quot;;7  $test4">
-<meta name="keywords" content="PHP">
+  <meta name="description" content="shell提供了一组变量，用来存储传递给脚本或函数的参数">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP &#96;??&#96; 与 &#96;?:&#96; 操作符的区别">
-<meta property="og:url" content="2020&#x2F;01&#x2F;07&#x2F;php_operator&#x2F;index.html">
+<meta property="og:title" content="shell位置参数">
+<meta property="og:url" content="2020&#x2F;03&#x2F;08&#x2F;position-param&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="?? 操作符是 PHP 7 引入的特性，它的使用方式与 ?: 的区别总结如下： 1&amp;lt;?php2  $str &#x3D; &quot;&quot;;3  $arr &#x3D; [&quot;b&quot; &#x3D;&amp;gt; 0, &quot;c&quot; &#x3D;&amp;gt; null];4  $test1 &#x3D; $str ?? &quot;test1&quot;;5  $test2 &#x3D; $str ?: &quot;test2&quot;;6  $test3 &#x3D; $arr[&quot;a&quot;] ?? &quot;test3&quot;;7  $test4">
+<meta property="og:description" content="shell提供了一组变量，用来存储传递给脚本或函数的参数">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-11T08:50:19.198Z">
+<meta property="og:updated_time" content="2020-03-09T02:49:22.773Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -155,61 +155,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-php_operator" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-position-param" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      PHP `??` 与 `?:` 操作符的区别
+      shell位置参数
     </h1>
   
 
         
-        <a href="2020/01/07/php_operator/" class="archive-article-date">
-  	<time datetime="2020-01-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
+        <a href="2020/03/08/position-param/" class="archive-article-date">
+  	<time datetime="2020-03-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>??</code> 操作符是 PHP 7 引入的特性，它的使用方式与 <code>?:</code> 的区别总结如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  $str = <span class="string">""</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  $arr = [<span class="string">"b"</span> =&gt; <span class="number">0</span>, <span class="string">"c"</span> =&gt; <span class="keyword">null</span>];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  $test1 = $str ?? <span class="string">"test1"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  $test2 = $str ?: <span class="string">"test2"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  $test3 = $arr[<span class="string">"a"</span>] ?? <span class="string">"test3"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  $test4 = $arr[<span class="string">"b"</span>] ?? <span class="string">"test4"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  $test5 = $arr[<span class="string">"c"</span>] ?? <span class="string">"test5"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  var_dump($test1, $test2, $test3, $test4, $test5);</span></pre></td></tr></table></figure>
-
+        <p><code>shell</code>提供了一组变量，用来存储传递给脚本或函数的参数</p>
 <a id="more"></a>
 
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">string</span><span class="params">(<span class="number">0</span>)</span></span> <span class="string">""</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">string</span><span class="params">(<span class="number">5</span>)</span></span> <span class="string">"test2"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">string</span><span class="params">(<span class="number">5</span>)</span></span> <span class="string">"test3"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">int</span><span class="params">(<span class="number">0</span>)</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">string</span><span class="params">(<span class="number">5</span>)</span></span> <span class="string">"test5"</span></span></pre></td></tr></table></figure>
+<h2 id="0-9以及更多的位置参数扩展"><a href="#0-9以及更多的位置参数扩展" class="headerlink" title="$0~$9以及更多的位置参数扩展"></a>$0~$9以及更多的位置参数扩展</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> posit-param</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">echo -e "\$0 = $0"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">echo -e "\$1 = $1"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">echo -e "\$2 = $2"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">echo -e "\$3 = $3"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">echo -e "\$4 = $4"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">echo -e "\$5 = $5"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">echo -e "\$6 = $6"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">echo -e "\$7 = $7"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">echo -e "\$8 = $8"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">echo -e "\$9 = $9"</span></pre></td></tr></table></figure>
 
-<p><code>??</code> 的判断形式相当于 <code>isset</code> 函数，即：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//$test1 = $str ?? "test";</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$test1 = <span class="keyword">isset</span>($str) ? $str : <span class="string">"test"</span>;</span></pre></td></tr></table></figure>
+<p>执行这个脚本，输出如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./posit-param</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">0 = ./posit-param.sh</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">1 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">2 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">3 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">4 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">5 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">6 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">7 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">8 =</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">9 =</span></span></pre></td></tr></table></figure>
 
-<p><code>isset</code> 函数判断结果为 <code>false</code> 的几种情况：</p>
-<ul>
-<li>变量未定义</li>
-<li>变量值为 <code>null</code>（也就是说值为 <code>0</code> <code>&quot;0&quot;</code>都会返回 <code>true</code>）</li>
-<li>检查字符串的<strong>非数字</strong>偏移量</li>
-</ul>
-<p>而 <code>?:</code> 的判断相当于 <code>empty</code> 函数，即：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//$test2 = $str ?: "test";</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$test2 = !<span class="keyword">empty</span>($str) ? $str : <span class="string">"test"</span>;</span></pre></td></tr></table></figure>
+<p><code>$0</code>存储的是所执行的程序所在的完成路径名，没有传递其他参数，则其他位置参数为空</p>
+<p>在脚本内增加一行接收第十个参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">echo -e "\$10 = $10"</span></pre></td></tr></table></figure>
 
-<p><code>empty</code> 函数判断结果为 <code>false</code> 的几种情况：</p>
-<ul>
-<li>空字符串 <code>&quot;&quot;</code></li>
-<li>整数 <code>0</code></li>
-<li>浮点数 <code>0.0</code></li>
-<li>字符串 <code>&quot;0&quot;</code></li>
-<li><code>null</code></li>
-<li><code>false</code></li>
-<li>空数组 <code>[]</code></li>
-<li>声明了但是没有值的变量</li>
-</ul>
-<p><code>isset</code> 和 <code>empty</code> 函数官方文档：</p>
-<blockquote>
-<p>isset函数文档：<a href="https://www.php.net/manual/zh/function.isset.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/function.isset.php</a></p>
-<p>empty函数文档：<a href="https://www.php.net/manual/zh/function.empty.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/function.empty.php</a></p>
-</blockquote>
+<p>执行脚本，传递十个参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./posit-param a b c d e f g h i j</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">0 = ./posit-param.sh</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">1 = a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">2 = b</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">3 = c</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">4 = d</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">5 = e</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">6 = f</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">7 = g</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">8 = h</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">9 = i</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">10 = a0  //没有接收到参数</span></span></pre></td></tr></table></figure>
+
+<p>可以通过参数扩展来接收第十个及更多的参数，将最后一行改为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">echo -e "\$10 = $&#123;10&#125;" #这样可以正常获取参数输出啦</span></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title="$#"></a>$#</h2><p><code>$#</code>存储的是传递给脚本或者函数的参数的个数</p>
+<p>在<code>posit-param</code>脚本内加一行代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">echo -e "params number is $# \n"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ./posit-param a b c d e f g h i j</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">params number is 10</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr></table></figure>
+
+<h2 id="shift用于处理大量参数"><a href="#shift用于处理大量参数" class="headerlink" title="shift用于处理大量参数"></a>shift用于处理大量参数</h2><p><code>shift</code>命令的作用是把除了<code>$0</code>以外的全部位置参数向左移动指定的间隔</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">shift 	#左移一位，$1被丢弃，$2移到$1，$3移到$2...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">shift 2 #左移两位，$1与$2被丢弃，$3移到$1，$4移到$2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr></table></figure>
+
+<p>示例脚本如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> posit-param2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">count=1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">while [ $# -ne 0 ]; do</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	echo "param $count is $1"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	count=$(( count + 1 ))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">	shift</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">done</span></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ./posit-param2 a b c</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">param 1 is a</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">param 2 is b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">param 3 is c</span></pre></td></tr></table></figure>
+
+<h2 id="与"><a href="#与" class="headerlink" title="$*与$@"></a>$*与$@</h2><p><code>$*</code>扩展为从<code>1</code>开始的位置参数列表。当被双引号包裹时（<code>&quot;$*&quot;</code>），将全部位置参数扩展为双引号引用的一个字符串，每个位置参数以<code>IFS</code>（通常默认为空格）变量分隔开。</p>
+<p><code>$@</code>扩展为从<code>1</code>开始的位置参数列表。当被双引号包裹时（<code>&quot;$@&quot;</code>），将每个参数扩展为双引号引用的独立的字符串。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> posit-param3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">print_params() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	echo "\$1 = $1"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	echo "\$2 = $2"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	echo "\$3 = $3"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">	echo "\$4 = $4"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">pass_params() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	echo '$*:'; print_params $*</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	echo '"$*":'; print_params "$*"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">	echo '$@:'; print_params $@</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	echo '"$@":'; print_params "$@"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">pass_params "word" "words with spaces"</span></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ./posit-param3</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#脚本输出</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$*:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$1</span> = word</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$2</span> = words</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$3</span> = with</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$4</span> = spaces</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="string">"$*"</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$1</span> = word words with spaces</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$2</span> =</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$3</span> =</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$4</span> =</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$@</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$1</span> = word</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$2</span> = words</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$3</span> = with</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$4</span> = spaces</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="string">"<span class="variable">$@</span>"</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$1</span> = word</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$2</span> = words with spaces</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$3</span> =</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="variable">$4</span> =</span></pre></td></tr></table></figure>
+
+<p>所以位置参数的扩展有<code>$*</code>、<code>&quot;$*&quot;</code>、<code>$@</code>、<code>&quot;$@&quot;</code>四种形式。通常情况下，<code>&quot;$@&quot;</code>会更符合我们的预期效果。</p>
 
       
 
@@ -223,7 +227,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">PHP</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -279,7 +283,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/01/07/php_operator/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/08/position-param/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +297,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/01/09/HSTS/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HSTS 安全策略及 HTTP 3XX状态码
-        
-      </div>
-    </a>
   
-  
-    <a href="2019/12/28/set/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">set 命令及常用参数</div>
+    <a href="2020/03/08/shell-symbol/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">shell中的各种括号的作用 $()、${}、[]、[[]]、(())等</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -331,7 +326,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-9以及更多的位置参数扩展"><span class="toc-number">1.</span> <span class="toc-text">$0~$9以及更多的位置参数扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-number">2.</span> <span class="toc-text">$#</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shift用于处理大量参数"><span class="toc-number">3.</span> <span class="toc-text">shift用于处理大量参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与"><span class="toc-number">4.</span> <span class="toc-text">$*与$@</span></a></li></ol>
                     </div>
                 </span>
             </div>
