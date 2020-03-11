@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="//codernote.top/"/>
-  <updated>2020-03-09T08:25:47.456Z</updated>
+  <updated>2020-03-11T08:42:37.343Z</updated>
   <id>//codernote.top/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派系统安装及设置ssh开机启动</title>
+    <link href="2020/03/11/raspberry-ssh/"/>
+    <id>2020/03/11/raspberry-ssh/</id>
+    <published>2020-03-10T16:00:00.000Z</published>
+    <updated>2020-03-11T08:42:37.343Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>资源及工具</strong></p><ul><li><p>国内在官网下载系统镜像会很慢，经过搜索一番之后找到此<a href="https://www.jianshu.com/p/8446f7971d66" target="_blank" rel="noopener">高速资源</a>。</p></li><li><p>如需格式化 SD 卡可使用这款<a href="https://www.sdcard.org/downloads/index.html" target="_blank" rel="noopener">工具</a>。</p></li><li><p>使用 win32DiskImager 将系统写入 SD 卡</p></li></ul><p><strong>开启ssh服务</strong></p><p>开机尝试<code>ssh</code>登陆，请求被拒绝，对于这个问题有一些旧答案说需要在<code>/boot</code>分区下创建一个名为<code>ssh</code>的空白文件，并尝试重<code>sshd</code>服务。而实际上新版本的系统已经不需要这样设置了，只需要开启<code>ssh</code>服务。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ systemctl start sshd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">//Unit sshd.service not found</span></pre></td></tr></table></figure><p>这条命令会报错。树莓派系统<code>ssh</code>服务名并不是<code>sshd</code>，而是<code>ssh</code>。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ systemctl start ssh</span></pre></td></tr></table></figure><p>启动成功</p><p><strong>设置ssh开机自启</strong></p><p>这里只需要修改文件<code>/etc/rc.local</code>文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start  <span class="comment">#加入这一行</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 0</span></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;资源及工具&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;国内在官网下载系统镜像会很慢，经过搜索一番之后找到此&lt;a href=&quot;https://www.jianshu.com/p/8446f7971d66&quot; target=&quot;_blank&quot; rel=&quot;no
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Linux" scheme="//codernote.top/tags/Linux/"/>
+    
+      <category term="树莓派" scheme="//codernote.top/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>shell的变量扩展</title>

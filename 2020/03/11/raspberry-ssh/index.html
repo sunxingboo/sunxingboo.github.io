@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>Archives: 2020/1 | 码农笔记</title>
+  <title>树莓派系统安装及设置ssh开机启动 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
-<meta name="keywords" content="后端,Linux,算法,数据结构,前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码农笔记">
-<meta property="og:url" content="archives&#x2F;2020&#x2F;01&#x2F;index.html">
+  <meta name="description" content="资源及工具  国内在官网下载系统镜像会很慢，经过搜索一番之后找到此高速资源。  如需格式化 SD 卡可使用这款工具。  使用 win32DiskImager 将系统写入 SD 卡   开启ssh服务 开机尝试ssh登陆，请求被拒绝，对于这个问题有一些旧答案说需要在&#x2F;boot分区下创建一个名为ssh的空白文件，并尝试重sshd服务。而实际上新版本的系统已经不需要这样设置了，只需要开启ssh服务。 1">
+<meta name="keywords" content="Linux,树莓派">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派系统安装及设置ssh开机启动">
+<meta property="og:url" content="2020&#x2F;03&#x2F;11&#x2F;raspberry-ssh&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
+<meta property="og:description" content="资源及工具  国内在官网下载系统镜像会很慢，经过搜索一番之后找到此高速资源。  如需格式化 SD 卡可使用这款工具。  使用 win32DiskImager 将系统写入 SD 卡   开启ssh服务 开机尝试ssh登陆，请求被拒绝，对于这个问题有一些旧答案说需要在&#x2F;boot分区下创建一个名为ssh的空白文件，并尝试重sshd服务。而实际上新版本的系统已经不需要这样设置了，只需要开启ssh服务。 1">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-11T08:42:37.343Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -154,167 +155,183 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-raspberry-ssh" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/19/internet/" class="archive-article-date">
-  	<time datetime="2020-01-19T09:12:20.690Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/19/internet/">internet</a>
+    <h1 class="article-title" itemprop="name">
+      树莓派系统安装及设置ssh开机启动
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/16/TCP_three_shake_hands/" class="archive-article-date">
-  	<time datetime="2020-01-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-16</time>
+        
+        <a href="2020/03/11/raspberry-ssh/" class="archive-article-date">
+  	<time datetime="2020-03-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-11</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/16/TCP_three_shake_hands/">TCP 三次握手</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>资源及工具</strong></p>
+<ul>
+<li><p>国内在官网下载系统镜像会很慢，经过搜索一番之后找到此<a href="https://www.jianshu.com/p/8446f7971d66" target="_blank" rel="noopener">高速资源</a>。</p>
+</li>
+<li><p>如需格式化 SD 卡可使用这款<a href="https://www.sdcard.org/downloads/index.html" target="_blank" rel="noopener">工具</a>。</p>
+</li>
+<li><p>使用 win32DiskImager 将系统写入 SD 卡</p>
+</li>
+</ul>
+<p><strong>开启ssh服务</strong></p>
+<p>开机尝试<code>ssh</code>登陆，请求被拒绝，对于这个问题有一些旧答案说需要在<code>/boot</code>分区下创建一个名为<code>ssh</code>的空白文件，并尝试重<code>sshd</code>服务。而实际上新版本的系统已经不需要这样设置了，只需要开启<code>ssh</code>服务。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ systemctl start sshd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">//Unit sshd.service not found</span></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<p>这条命令会报错。树莓派系统<code>ssh</code>服务名并不是<code>sshd</code>，而是<code>ssh</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ systemctl start ssh</span></pre></td></tr></table></figure>
+
+<p>启动成功</p>
+<p><strong>设置ssh开机自启</strong></p>
+<p>这里只需要修改文件<code>/etc/rc.local</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start  <span class="comment">#加入这一行</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 0</span></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">TCP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/09/HSTS/" class="archive-article-date">
-  	<time datetime="2020-01-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/09/HSTS/">HSTS 安全策略及 HTTP 3XX状态码</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">HTTP</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">安全</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">树莓派</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/11/raspberry-ssh/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/07/php_operator/" class="archive-article-date">
-  	<time datetime="2020-01-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="2020/03/09/var-expand/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">shell的变量扩展</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/07/php_operator/">PHP `??` 与 `?:` 操作符的区别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -337,8 +354,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
