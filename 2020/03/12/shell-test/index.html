@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>HSTS 安全策略及 HTTP 3XX状态码 | 码农笔记</title>
+  <title>shell表达式判断 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="工作测试时遇到 HSTS 导致的重定向问题，查阅资料做如下整理。">
-<meta name="keywords" content="HTTP,安全">
+  <meta name="description" content="test expression [ expression ]  测试文件的表达式    表达式 为true的条件    file1 -ef file2 file1与file2两个文件通过硬连接指向同一个文件   file1 -nt file2 file1比file2新   file1 -ot file2 file1比file2旧   -b file file存在且是一个块（设备）文件   -c">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HSTS 安全策略及 HTTP 3XX状态码">
-<meta property="og:url" content="2020&#x2F;01&#x2F;09&#x2F;HSTS&#x2F;index.html">
+<meta property="og:title" content="shell表达式判断">
+<meta property="og:url" content="2020&#x2F;03&#x2F;12&#x2F;shell-test&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="工作测试时遇到 HSTS 导致的重定向问题，查阅资料做如下整理。">
+<meta property="og:description" content="test expression [ expression ]  测试文件的表达式    表达式 为true的条件    file1 -ef file2 file1与file2两个文件通过硬连接指向同一个文件   file1 -nt file2 file1比file2新   file1 -ot file2 file1比file2旧   -b file file存在且是一个块（设备）文件   -c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-11T08:50:19.197Z">
+<meta property="og:updated_time" content="2020-03-12T10:48:49.726Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -155,129 +155,193 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HSTS" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-shell-test" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      HSTS 安全策略及 HTTP 3XX状态码
+      shell表达式判断
     </h1>
   
 
         
-        <a href="2020/01/09/HSTS/" class="archive-article-date">
-  	<time datetime="2020-01-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-09</time>
+        <a href="2020/03/12/shell-test/" class="archive-article-date">
+  	<time datetime="2020-03-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>工作测试时遇到 <code>HSTS</code> 导致的重定向问题，查阅资料做如下整理。</p>
-<a id="more"></a>
-
-<h2 id="1-HSTS"><a href="#1-HSTS" class="headerlink" title="1. HSTS"></a>1. HSTS</h2><h3 id="1-1-概念与作用"><a href="#1-1-概念与作用" class="headerlink" title="1.1. 概念与作用"></a>1.1. 概念与作用</h3><blockquote>
-<p>HSTS 是 HTTP Strict Transport Security 的缩写，即：“ HTTP 严格传输安全”</p>
+        <blockquote>
+<p>test expression</p>
+<p>[ expression ]</p>
 </blockquote>
-<p>它的作用是强制客户端使用 HTTPS 与服务器建立连接。</p>
-<h3 id="1-2-HTTPS-连接建立过程"><a href="#1-2-HTTPS-连接建立过程" class="headerlink" title="1.2. HTTPS 连接建立过程"></a>1.2. HTTPS 连接建立过程</h3><p>对于使用 HTTPS 的服务器，客户端建立连接的过程大致如下，用户第一次直接输入网址发起 HTTP 请求，服务器给予用户重定向响应，客户端收到响应发起 HTTPS 请求。</p>
-<pre class="mermaid">sequenceDiagram
-    participant C as 浏览器
-    participant S as 服务器
-    C->>S: http://codernote.top
-    S->>C: 重定向响应 https://www.codernote.top:443
-    C->>S: https://www.codernote.top:443
-    S->>C: 200 OK</pre>
-
-<h3 id="1-3-缺陷"><a href="#1-3-缺陷" class="headerlink" title="1.3. 缺陷"></a>1.3. 缺陷</h3><p>可以很容易发现这一 HTTPS 连接的建立过程存在明显的缺陷，就是存在一次明文通信的 HTTP 请求，容易被中间人劫持，这样就导致 HTTPS 失去了作用。</p>
-<pre class="mermaid">sequenceDiagram
-    participant C as 浏览器
-    participant M as 中间人
-    participant S2 as 邪恶的网站
-    participant S1 as codernote.top
-    C->>M: http://codernote.top
-    M->>S2: 被劫持
-    S2->>M: 200 OK
-    M->>C: 200 OK</pre>
-
-<h3 id="1-4-解决办法-HSTS"><a href="#1-4-解决办法-HSTS" class="headerlink" title="1.4. 解决办法 HSTS"></a>1.4. 解决办法 HSTS</h3><p><code>HSTS</code> 就是为了解决这一缺陷。浏览器自动将 <code>HTTP</code> 转换为 <code>HTTPS</code> 请求。实现这一转换过程就要基于服务器的 <code>HSTS</code> 响应头，<strong>在第一次成功的请求后获取到响应头，此后在过期时间内，对于该域名的请求都将强制使用<code>HSTS</code></strong>。</p>
-<pre class="mermaid">sequenceDiagram
-    participant C as 浏览器
-    participant S as 服务器
-    C->>C: http://codernote.top
-    C->>S: https://www.codernote.top:443
-    S->>C: 200 OK</pre>
-
-<h3 id="1-5-HSTS-响应头"><a href="#1-5-HSTS-响应头" class="headerlink" title="1.5. HSTS 响应头"></a>1.5. HSTS 响应头</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Strict-Transport-Security: &lt;max-age=&gt;[; includeSubDomains][; preload]</span></pre></td></tr></table></figure>
-
-<p>它由三部分组成</p>
-<ul>
-<li><code>max-age</code> : 必选项，过期时间</li>
-<li><code>includeSubDomains</code> : 可选，当前域名及子域名域名均开启 <code>HSTS</code></li>
-<li><code>preload</code> : 可选，域名申请加入浏览器内置列表时必须开启此选项</li>
-</ul>
-<h3 id="1-6-依然存在的缺陷"><a href="#1-6-依然存在的缺陷" class="headerlink" title="1.6. 依然存在的缺陷"></a>1.6. 依然存在的缺陷</h3><p>但是这种机制下仍然存在漏洞，就是要有一次对目标服务器成功的请求，这一才能获取到包含 <code>HSTS</code> 响应头的响应，也就是说仍然需要经历一次由 <code>HTTP</code> 到 <code>HTTPS</code> 的重定向，也就仍然存在被劫持的风险。</p>
-<p>浏览器 <code>preload list</code> 用来解决这一缺陷，申请加域名添加至浏览器的  <code>preload list</code> 后则所有对该域名的请求都将转换为 <code>HTTPS</code>。</p>
-<h2 id="2-HTTP-3XX-状态码"><a href="#2-HTTP-3XX-状态码" class="headerlink" title="2. HTTP 3XX 状态码"></a>2. HTTP 3XX 状态码</h2><table>
+<p><strong>测试文件的表达式</strong></p>
+<table>
 <thead>
 <tr>
-<th>状态码</th>
-<th>描述</th>
-<th>备注</th>
+<th>表达式</th>
+<th>为true的条件</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>301</td>
-<td>Moved Permanently</td>
-<td></td>
+<td>file1 -ef file2</td>
+<td>file1与file2两个文件通过硬连接指向同一个文件</td>
 </tr>
 <tr>
-<td>308</td>
-<td>Permanent Redirect</td>
-<td></td>
+<td>file1 -nt file2</td>
+<td>file1比file2新</td>
 </tr>
 <tr>
-<td>302</td>
-<td>Found</td>
-<td>临时重定向 POST 不限制具体实现</td>
+<td>file1 -ot file2</td>
+<td>file1比file2旧</td>
 </tr>
 <tr>
-<td>303</td>
-<td>See Other</td>
-<td>POST 转为 GET</td>
+<td>-b file</td>
+<td>file存在且是一个块（设备）文件</td>
 </tr>
 <tr>
-<td>307</td>
-<td>Temporary Redirect</td>
-<td>保持 POST</td>
+<td>-c file</td>
+<td>file存在且是一个字符（设备）文件</td>
 </tr>
 <tr>
-<td>304</td>
-<td>Not Modified</td>
-<td>无变更</td>
+<td>-d file</td>
+<td>file存在且是一个目录</td>
 </tr>
 <tr>
-<td>305</td>
-<td>Use Proxy</td>
-<td>必须使用指定的代理访问</td>
+<td>-e file</td>
+<td>file存在</td>
 </tr>
 <tr>
-<td>306</td>
-<td>Switch Proxy</td>
-<td>已废弃</td>
+<td>-f file</td>
+<td>file存在且是一个普通文件</td>
+</tr>
+<tr>
+<td>-g file</td>
+<td>file存在且设置了组ID</td>
+</tr>
+<tr>
+<td>-G file</td>
+<td>file存在且属于有效组ID</td>
+</tr>
+<tr>
+<td>-k file</td>
+<td>file存在且有粘滞位属性</td>
+</tr>
+<tr>
+<td>-L file</td>
+<td>file存在且是一个符号链接</td>
+</tr>
+<tr>
+<td>-O file</td>
+<td>file存在并且属于有效用户ID</td>
+</tr>
+<tr>
+<td>-p file</td>
+<td>file存在并且是一个命名管道</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>file存在且可读</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>file存在且其长度大于0</td>
+</tr>
+<tr>
+<td>-S file</td>
+<td>file存在且是一个网络套接字</td>
+</tr>
+<tr>
+<td>-t fd</td>
+<td>fd是一个定向到终端/从终端定向的文件描述符，可以用来确定标准输入/输出/错误是否被重定向</td>
+</tr>
+<tr>
+<td>-u file</td>
+<td>file存在且设置了setuid位</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>file存在且可写</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>file存在且可执行</td>
 </tr>
 </tbody></table>
-<h3 id="2-1-302、303、307-状态码"><a href="#2-1-302、303、307-状态码" class="headerlink" title="2.1. 302、303、307 状态码"></a>2.1. 302、303、307 状态码</h3><p><code>HTTP 1.0</code> 定义 302 状态码，临时重定向，此时说明原 <code>URI</code> 地址依然可用，应该保持。浏览器重定向至响应头中 <code>Location</code> 指定的地址，规定对 <code>POST</code> 请求重定向是不能改变请求方法，但是各浏览器的实现中并未全部遵守此规定，有的浏览器会将原本 <code>POST</code> 请求的重定向转换为 <code>GET</code>，而有的浏览器依然保持原请求方法。</p>
-<p>在 <code>HTTP 1.1</code> 中修改了规范</p>
-<ul>
-<li>302 状态码对 <code>POST</code> 的重定向不再限制，可以转为 <code>GET</code> 也可以保持 <code>POST</code> </li>
-<li>增加 303 状态码，<code>POST</code> 的重定向会转为 <code>GET</code></li>
-<li>增加 307 状态码，<code>POST</code> 的重定向会保持 <code>POST</code></li>
-</ul>
-<p>也就是说 303、307 状态码是对 302 的补充，保持 302 兼容老版本。</p>
-<h3 id="2-2-301、308-状态码"><a href="#2-2-301、308-状态码" class="headerlink" title="2.2. 301、308 状态码"></a>2.2. 301、308 状态码</h3><p>与 302 类似，308 是对 301 的补充，均为永久重定向，但是 301 的实现如 302 , 有时 <code>POST</code> 会被转换为 <code>GET</code>，而 308 不会进行转换。</p>
+<p><strong>测试字符串的表达式</strong></p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>为true的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>string</td>
+<td>string不为空</td>
+</tr>
+<tr>
+<td>-n string</td>
+<td>string长度大于0</td>
+</tr>
+<tr>
+<td>-z string</td>
+<td>string长度等于0</td>
+</tr>
+<tr>
+<td>string1 = string2<br/>string1 == string2</td>
+<td>相等</td>
+</tr>
+<tr>
+<td>string1 != string2</td>
+<td>不等</td>
+</tr>
+<tr>
+<td>string1 &gt; string2</td>
+<td>经过排序后，string1在string2之后</td>
+</tr>
+<tr>
+<td>string1 &lt; string2</td>
+<td>经过排序后，string1在string2之前</td>
+</tr>
+</tbody></table>
+<p><strong>测试数值的表达式</strong></p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>为true的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>integer1 -eq integer2</td>
+<td>integer1 等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -ne integer2</td>
+<td>integer1 不等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -le integer2</td>
+<td>integer1 小于等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -lt integer2</td>
+<td>integer1 小于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -ge integer2</td>
+<td>integer1 大于等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -gt integer2</td>
+<td>integer1 大于 integer2</td>
+</tr>
+</tbody></table>
 
       
 
@@ -291,11 +355,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">HTTP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">安全</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -351,7 +411,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/01/09/HSTS/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/12/shell-test/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -365,18 +425,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/01/16/TCP_three_shake_hands/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          TCP 三次握手
-        
-      </div>
-    </a>
   
-  
-    <a href="2020/01/07/php_operator/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">PHP `??` 与 `?:` 操作符的区别</div>
+    <a href="2020/03/11/raspberry-ssh/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">树莓派系统安装及设置ssh开机启动</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -403,7 +454,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HSTS"><span class="toc-number">1.</span> <span class="toc-text">1. HSTS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-概念与作用"><span class="toc-number">1.1.</span> <span class="toc-text">1.1. 概念与作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-HTTPS-连接建立过程"><span class="toc-number">1.2.</span> <span class="toc-text">1.2. HTTPS 连接建立过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-缺陷"><span class="toc-number">1.3.</span> <span class="toc-text">1.3. 缺陷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-解决办法-HSTS"><span class="toc-number">1.4.</span> <span class="toc-text">1.4. 解决办法 HSTS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-HSTS-响应头"><span class="toc-number">1.5.</span> <span class="toc-text">1.5. HSTS 响应头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-依然存在的缺陷"><span class="toc-number">1.6.</span> <span class="toc-text">1.6. 依然存在的缺陷</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-HTTP-3XX-状态码"><span class="toc-number">2.</span> <span class="toc-text">2. HTTP 3XX 状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-302、303、307-状态码"><span class="toc-number">2.1.</span> <span class="toc-text">2.1. 302、303、307 状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-301、308-状态码"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 301、308 状态码</span></a></li></ol></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>

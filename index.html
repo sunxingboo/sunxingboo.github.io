@@ -156,6 +156,246 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-shell-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/12/shell-test/">shell表达式判断</a>
+    </h1>
+  
+
+        
+        <a href="2020/03/12/shell-test/" class="archive-article-date">
+  	<time datetime="2020-03-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>test expression</p>
+<p>[ expression ]</p>
+</blockquote>
+<p><strong>测试文件的表达式</strong></p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>为true的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>file1 -ef file2</td>
+<td>file1与file2两个文件通过硬连接指向同一个文件</td>
+</tr>
+<tr>
+<td>file1 -nt file2</td>
+<td>file1比file2新</td>
+</tr>
+<tr>
+<td>file1 -ot file2</td>
+<td>file1比file2旧</td>
+</tr>
+<tr>
+<td>-b file</td>
+<td>file存在且是一个块（设备）文件</td>
+</tr>
+<tr>
+<td>-c file</td>
+<td>file存在且是一个字符（设备）文件</td>
+</tr>
+<tr>
+<td>-d file</td>
+<td>file存在且是一个目录</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>file存在</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>file存在且是一个普通文件</td>
+</tr>
+<tr>
+<td>-g file</td>
+<td>file存在且设置了组ID</td>
+</tr>
+<tr>
+<td>-G file</td>
+<td>file存在且属于有效组ID</td>
+</tr>
+<tr>
+<td>-k file</td>
+<td>file存在且有粘滞位属性</td>
+</tr>
+<tr>
+<td>-L file</td>
+<td>file存在且是一个符号链接</td>
+</tr>
+<tr>
+<td>-O file</td>
+<td>file存在并且属于有效用户ID</td>
+</tr>
+<tr>
+<td>-p file</td>
+<td>file存在并且是一个命名管道</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>file存在且可读</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>file存在且其长度大于0</td>
+</tr>
+<tr>
+<td>-S file</td>
+<td>file存在且是一个网络套接字</td>
+</tr>
+<tr>
+<td>-t fd</td>
+<td>fd是一个定向到终端/从终端定向的文件描述符，可以用来确定标准输入/输出/错误是否被重定向</td>
+</tr>
+<tr>
+<td>-u file</td>
+<td>file存在且设置了setuid位</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>file存在且可写</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>file存在且可执行</td>
+</tr>
+</tbody></table>
+<p><strong>测试字符串的表达式</strong></p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>为true的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>string</td>
+<td>string不为空</td>
+</tr>
+<tr>
+<td>-n string</td>
+<td>string长度大于0</td>
+</tr>
+<tr>
+<td>-z string</td>
+<td>string长度等于0</td>
+</tr>
+<tr>
+<td>string1 = string2<br/>string1 == string2</td>
+<td>相等</td>
+</tr>
+<tr>
+<td>string1 != string2</td>
+<td>不等</td>
+</tr>
+<tr>
+<td>string1 &gt; string2</td>
+<td>经过排序后，string1在string2之后</td>
+</tr>
+<tr>
+<td>string1 &lt; string2</td>
+<td>经过排序后，string1在string2之前</td>
+</tr>
+</tbody></table>
+<p><strong>测试数值的表达式</strong></p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>为true的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>integer1 -eq integer2</td>
+<td>integer1 等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -ne integer2</td>
+<td>integer1 不等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -le integer2</td>
+<td>integer1 小于等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -lt integer2</td>
+<td>integer1 小于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -ge integer2</td>
+<td>integer1 大于等于 integer2</td>
+</tr>
+<tr>
+<td>integer1 -gt integer2</td>
+<td>integer1 大于 integer2</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="2020/03/12/shell-test/">Read More >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-raspberry-ssh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -864,81 +1104,6 @@
 
 
   
-    <article id="post-internet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/19/internet/">internet</a>
-    </h1>
-  
-
-        
-        <a href="2020/01/19/internet/" class="archive-article-date">
-  	<time datetime="2020-01-19T09:12:20.690Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>链路层：以太网数据报，发送、接收方<code>MAC</code>地址</li>
-<li>网络层：<code>IP</code> 数据报，发送、接收方<code>IP</code>地址</li>
-<li>传输层：<code>UDP/TCP</code> 数据报，发送、接收方端口号 </li>
-</ul>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><ul>
-<li><code>MAC</code> 地址：48 位二进制位，由 12 个十六进制数表示，前 6 个位厂商标识，后 6 个为该厂商的网卡流水号</li>
-<li>本机的 <code>IP</code> 地址</li>
-<li>子网掩码</li>
-<li>网关的 <code>IP</code> 地址</li>
-<li><code>DNS</code> 的 <code>IP</code> 地址 </li>
-</ul>
-<h2 id="IP-地址分配"><a href="#IP-地址分配" class="headerlink" title="IP 地址分配"></a>IP 地址分配</h2><h3 id="静态手动设置"><a href="#静态手动设置" class="headerlink" title="静态手动设置"></a>静态手动设置</h3><h3 id="DHCP-动态分配"><a href="#DHCP-动态分配" class="headerlink" title="DHCP 动态分配"></a><code>DHCP</code> 动态分配</h3><p>每一个子网都有一个 <code>DHCP</code> 服务器，刚加入网络的设备是没有 <code>IP</code> 地址的，需要向 <code>DHCP</code> 服务器发出一个 <code>DHCP</code> 请求数据包来获取 <code>IP</code> 地址及其他网络参数。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/01/19/internet/">Read More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">Next &amp;raquo;</a>
@@ -1061,11 +1226,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1077,11 +1242,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
