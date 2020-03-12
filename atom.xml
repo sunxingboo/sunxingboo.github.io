@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="//codernote.top/"/>
-  <updated>2020-03-12T10:48:49.726Z</updated>
+  <updated>2020-03-12T11:10:15.900Z</updated>
   <id>//codernote.top/</id>
   
   <author>
@@ -21,25 +21,16 @@
     <link href="2020/03/12/shell-test/"/>
     <id>2020/03/12/shell-test/</id>
     <published>2020-03-11T16:00:00.000Z</published>
-    <updated>2020-03-12T10:48:49.726Z</updated>
+    <updated>2020-03-12T11:10:15.900Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>test expression</p><p>[ expression ]</p></blockquote><p><strong>测试文件的表达式</strong></p><table><thead><tr><th>表达式</th><th>为true的条件</th></tr></thead><tbody><tr><td>file1 -ef file2</td><td>file1与file2两个文件通过硬连接指向同一个文件</td></tr><tr><td>file1 -nt file2</td><td>file1比file2新</td></tr><tr><td>file1 -ot file2</td><td>file1比file2旧</td></tr><tr><td>-b file</td><td>file存在且是一个块（设备）文件</td></tr><tr><td>-c file</td><td>file存在且是一个字符（设备）文件</td></tr><tr><td>-d file</td><td>file存在且是一个目录</td></tr><tr><td>-e file</td><td>file存在</td></tr><tr><td>-f file</td><td>file存在且是一个普通文件</td></tr><tr><td>-g file</td><td>file存在且设置了组ID</td></tr><tr><td>-G file</td><td>file存在且属于有效组ID</td></tr><tr><td>-k file</td><td>file存在且有粘滞位属性</td></tr><tr><td>-L file</td><td>file存在且是一个符号链接</td></tr><tr><td>-O file</td><td>file存在并且属于有效用户ID</td></tr><tr><td>-p file</td><td>file存在并且是一个命名管道</td></tr><tr><td>-r file</td><td>file存在且可读</td></tr><tr><td>-s file</td><td>file存在且其长度大于0</td></tr><tr><td>-S file</td><td>file存在且是一个网络套接字</td></tr><tr><td>-t fd</td><td>fd是一个定向到终端/从终端定向的文件描述符，可以用来确定标准输入/输出/错误是否被重定向</td></tr><tr><td>-u file</td><td>file存在且设置了setuid位</td></tr><tr><td>-w file</td><td>file存在且可写</td></tr><tr><td>-x file</td><td>file存在且可执行</td></tr></tbody></table><p><strong>测试字符串的表达式</strong></p><table><thead><tr><th>表达式</th><th>为true的条件</th></tr></thead><tbody><tr><td>string</td><td>string不为空</td></tr><tr><td>-n string</td><td>string长度大于0</td></tr><tr><td>-z string</td><td>string长度等于0</td></tr><tr><td>string1 = string2<br/>string1 == string2</td><td>相等</td></tr><tr><td>string1 != string2</td><td>不等</td></tr><tr><td>string1 &gt; string2</td><td>经过排序后，string1在string2之后</td></tr><tr><td>string1 &lt; string2</td><td>经过排序后，string1在string2之前</td></tr></tbody></table><p><strong>测试数值的表达式</strong></p><table><thead><tr><th>表达式</th><th>为true的条件</th></tr></thead><tbody><tr><td>integer1 -eq integer2</td><td>integer1 等于 integer2</td></tr><tr><td>integer1 -ne integer2</td><td>integer1 不等于 integer2</td></tr><tr><td>integer1 -le integer2</td><td>integer1 小于等于 integer2</td></tr><tr><td>integer1 -lt integer2</td><td>integer1 小于 integer2</td></tr><tr><td>integer1 -ge integer2</td><td>integer1 大于等于 integer2</td></tr><tr><td>integer1 -gt integer2</td><td>integer1 大于 integer2</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>test expression</p><p>[ expression ]</p></blockquote><a id="more"></a><p>测试文件的表达式**</p><table><thead><tr><th>表达式</th><th>为true的条件</th></tr></thead><tbody><tr><td>file1 -ef file2</td><td>file1与file2两个文件通过硬连接指向同一个文件</td></tr><tr><td>file1 -nt file2</td><td>file1比file2新</td></tr><tr><td>file1 -ot file2</td><td>file1比file2旧</td></tr><tr><td>-b file</td><td>file存在且是一个块（设备）文件</td></tr><tr><td>-c file</td><td>file存在且是一个字符（设备）文件</td></tr><tr><td>-d file</td><td>file存在且是一个目录</td></tr><tr><td>-e file</td><td>file存在</td></tr><tr><td>-f file</td><td>file存在且是一个普通文件</td></tr><tr><td>-g file</td><td>file存在且设置了组ID</td></tr><tr><td>-G file</td><td>file存在且属于有效组ID</td></tr><tr><td>-k file</td><td>file存在且有粘滞位属性</td></tr><tr><td>-L file</td><td>file存在且是一个符号链接</td></tr><tr><td>-O file</td><td>file存在并且属于有效用户ID</td></tr><tr><td>-p file</td><td>file存在并且是一个命名管道</td></tr><tr><td>-r file</td><td>file存在且可读</td></tr><tr><td>-s file</td><td>file存在且其长度大于0</td></tr><tr><td>-S file</td><td>file存在且是一个网络套接字</td></tr><tr><td>-t fd</td><td>fd是一个定向到终端/从终端定向的文件描述符，可以用来确定标准输入/输出/错误是否被重定向</td></tr><tr><td>-u file</td><td>file存在且设置了setuid位</td></tr><tr><td>-w file</td><td>file存在且可写</td></tr><tr><td>-x file</td><td>file存在且可执行</td></tr></tbody></table><p><strong>测试字符串的表达式</strong></p><table><thead><tr><th>表达式</th><th>为true的条件</th></tr></thead><tbody><tr><td>string</td><td>string不为空</td></tr><tr><td>-n string</td><td>string长度大于0</td></tr><tr><td>-z string</td><td>string长度等于0</td></tr><tr><td>string1 = string2<br/>string1 == string2</td><td>相等</td></tr><tr><td>string1 != string2</td><td>不等</td></tr><tr><td>string1 &gt; string2</td><td>经过排序后，string1在string2之后</td></tr><tr><td>string1 &lt; string2</td><td>经过排序后，string1在string2之前</td></tr></tbody></table><p><strong>测试数值的表达式</strong></p><table><thead><tr><th>表达式</th><th>为true的条件</th></tr></thead><tbody><tr><td>integer1 -eq integer2</td><td>integer1 等于 integer2</td></tr><tr><td>integer1 -ne integer2</td><td>integer1 不等于 integer2</td></tr><tr><td>integer1 -le integer2</td><td>integer1 小于等于 integer2</td></tr><tr><td>integer1 -lt integer2</td><td>integer1 小于 integer2</td></tr><tr><td>integer1 -ge integer2</td><td>integer1 大于等于 integer2</td></tr><tr><td>integer1 -gt integer2</td><td>integer1 大于 integer2</td></tr></tbody></table>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;blockquote&gt;
+      &lt;blockquote&gt;
 &lt;p&gt;test expression&lt;/p&gt;
 &lt;p&gt;[ expression ]&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;测试文件的表达式&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;表达式&lt;/th&gt;
-&lt;
-      
     
     </summary>
     
