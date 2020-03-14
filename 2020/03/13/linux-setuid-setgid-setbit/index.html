@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>Archives: 2020/1 | 码农笔记</title>
+  <title>Linux下的SUID、SGID、SBIT权限设置与作用 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
-<meta name="keywords" content="后端,Linux,算法,数据结构,前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码农笔记">
-<meta property="og:url" content="archives&#x2F;2020&#x2F;01&#x2F;index.html">
+  <meta name="description" content="SUIDSUID只能对文件设置  只对二进制可执行文件有效 执行者对文件有x权限，在执行此程序期间获取到程序所有者的身份  普通的文件权限 1-rwxrwxr-x  设置了SUID位的文件权限，拥有者的x变为s。 1-rwsrwxr-x  设置方法 1chmod 4xxx &amp;lt;name&amp;gt;">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下的SUID、SGID、SBIT权限设置与作用">
+<meta property="og:url" content="2020&#x2F;03&#x2F;13&#x2F;linux-setuid-setgid-setbit&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
+<meta property="og:description" content="SUIDSUID只能对文件设置  只对二进制可执行文件有效 执行者对文件有x权限，在执行此程序期间获取到程序所有者的身份  普通的文件权限 1-rwxrwxr-x  设置了SUID位的文件权限，拥有者的x变为s。 1-rwsrwxr-x  设置方法 1chmod 4xxx &amp;lt;name&amp;gt;">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-14T09:08:48.816Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -154,167 +155,250 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-linux-setuid-setgid-setbit" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux下的SUID、SGID、SBIT权限设置与作用
+    </h1>
+  
+
+        
+        <a href="2020/03/13/linux-setuid-setgid-setbit/" class="archive-article-date">
+  	<time datetime="2020-03-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h2><p><code>SUID</code>只能对文件设置</p>
+<ul>
+<li>只对二进制可执行文件有效</li>
+<li>执行者对文件有<code>x</code>权限，在执行此程序期间获取到程序所有者的身份</li>
+</ul>
+<p>普通的文件权限</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-rwxrwxr-x</span></span></pre></td></tr></table></figure>
+
+<p>设置了<code>SUID</code>位的文件权限，拥有者的<code>x</code>变为<code>s</code>。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-rwsrwxr-x</span></span></pre></td></tr></table></figure>
+
+<p>设置方法</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">chmod <span class="number">4</span>xxx &lt;name&gt;</span></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>做一个实验验证，创建两个测试用户<code>test-1 test-2</code>，登陆到<code>test-1</code>并在家目录创下创建一个文件<code>data.log</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">============</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span>-1 data</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">============</span></pre></td></tr></table></figure>
+
+<p>切换到<code>/tmp</code>目录，建立一个读取<code>data.log</code>的脚本，并为其分配<code>755</code>权限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cat /home/<span class="built_in">test</span>-1/data.log</span></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ chmod 755 readlog.sh</span></pre></td></tr></table></figure>
+
+<p>现在切换到<code>test-2</code>用户，执行一下这个脚本看一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ /tmp/readlog.sh</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">cat: /home/<span class="built_in">test</span>-1/data.log: Permission denied</span></pre></td></tr></table></figure>
+
+<p>肯定是没有权限读取的，切回<code>test-1</code>用户，给脚本设置<code>SUID</code>位，然后再切回<code>test-2</code>并执行脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ chmod 4755 readlog.sh</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ /tmp/readlog.sh</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ cat: /home/<span class="built_in">test</span>-1/data.log: Permission denied</span></pre></td></tr></table></figure>
+
+<p>此时依然无法读取，说明对于<code>shell</code>脚本，<code>SUID</code>的设置是没有作用的。</p>
+<p>这里我切到<code>test-1</code>写一段<code>go</code>程序，并编译成二进制文件。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"io/ioutil"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    fmt.Println(<span class="string">"readlog is running..."</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    data, err := ioutil.ReadFile(<span class="string">"/home/test-1/data.log"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"File reading error"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    fmt.Println(<span class="string">"Contents of file:"</span>, <span class="keyword">string</span>(data))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ go build readlog.go</span></pre></td></tr></table></figure>
+
+<p>切回<code>test-2</code>，执行这个二进制文件，没有权限。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ /tmp/readlog</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">readlog is <span class="built_in">running</span>...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">File</span> reading error <span class="built_in">open</span> /<span class="built_in">home</span>/test<span class="number">-1</span>/data.<span class="built_in">log</span>: permission denied</span></pre></td></tr></table></figure>
+
+<p>我们切回<code>test-1</code>并给这个二进制文件设置<code>SUID</code>位，再切回<code>test-2</code>执行，已经可以读取到<code>test-1</code>用户家目录下的文件了，说明这个执行过程中<code>test-2</code>用户获取到了<code>test-1</code>的身份。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ chmod 4755 readlog</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ /tmp/readlog</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">readlog is running...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">Contents of file: <span class="built_in">test</span>-1 data</span></pre></td></tr></table></figure>
+
+<h2 id="SGID"><a href="#SGID" class="headerlink" title="SGID"></a>SGID</h2><p><code>SGID</code>可以对文件或目录设置</p>
+<ul>
+<li><p>文件</p>
+<ul>
+<li>对二进制文件有效</li>
+<li>执行者对文件有<code>x</code>权限，在执行期间获取到程序所属群组的权限</li>
+</ul>
+</li>
+<li><p>目录</p>
+<ul>
+<li>对目录有<code>r</code>和<code>x</code>权限的用户可以进入目录</li>
+<li>用户在此目录下的有效群组将会变为该目录的群组</li>
+<li>若用户在此目录具有<code>w</code>权限，则其创建的文件的所属群组与此目录的所属群组相同</li>
+</ul>
+</li>
+</ul>
+<p>普通文件权限</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-rwxrwxr-x</span></span></pre></td></tr></table></figure>
+
+<p>设置了<code>SGID</code>权限，所属组的<code>x</code>变为<code>s</code></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-rwxrwsr-x</span></span></pre></td></tr></table></figure>
+
+<p>设置方法</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">chmod <span class="number">2</span>xxx &lt;name&gt;</span></pre></td></tr></table></figure>
+
+
+
+<p>建立一个测试群组，创建一个目录并分配到这个群组上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ groupadd sgid-test</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ mkdir /tmp/sgid-test</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ chgrp /tmp/sgid-test sgid-test</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ ls /tmp/</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">drwxr-xr-x. 2 root   sgid-test       6 3月  14 16:10 sgid-test</span></pre></td></tr></table></figure>
+
+<p>切换到<code>test-1</code>在这个目录创建一个文件试试看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"test1"</span> &gt; /tmp/sgid-test/data.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ ls /tmp/sgid-test/</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">-rw-rw-r--. 1 <span class="built_in">test</span>-1 <span class="built_in">test</span>-1 4 3月  14 16:14 data.txt</span></pre></td></tr></table></figure>
+
+<p>这时创建的文件属于<code>test-1</code>用户和<code>test-1</code>分组</p>
+<p>切回管理员账户并给改目录设置<code>SGID</code>，再用<code>test-1</code>创建一个文件试一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ su -</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ chmod 2777 /tmp/sgid-test</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ ls /tmp/</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">drwxrwsrwx. 2 root   sgid-test      22 Mar 14 16:14 sgid-test</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"test2"</span> &gt; /tmp/sgid-test/data2.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">$ ls /tmp/sgid-test/</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">-rw-rw-r--. 1 <span class="built_in">test</span>-1 sgid-test 4 Mar 14 16:15 data2.txt</span></pre></td></tr></table></figure>
+
+<p>可以看到这时<code>test-1</code>创建的文件属于<code>test-1</code>用户和<code>sgid-test</code>分组</p>
+<h2 id="SBIT"><a href="#SBIT" class="headerlink" title="SBIT"></a>SBIT</h2><p><code>SBIT</code>只能对目录设置，设置了该权限之后，对此目录有<code>w</code>和<code>x</code>权限的用户，在该目录内创建的文件之后用户自己与<code>root</code>有权限删除。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">drwxrwxrwt.   <span class="number">8</span> root root       <span class="number">177</span> Mar <span class="number">14</span> <span class="number">16</span>:<span class="number">55</span> tmp</span></pre></td></tr></table></figure>
+
+<p><code>test-1</code>在<code>/tmp</code>创建文件并给予全部权限，再切到<code>test-2</code>对其进行一些操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"test"</span> &gt; /tmp/test.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ chmod 777 /tmp/test.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>-2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"line2"</span> &gt;&gt; /tmp/test.txt 	<span class="comment">#可以正常编辑</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ rm /tmp/test.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">rm: cannot remove ‘test.txt’: Operation not permitted		<span class="comment">#但是不能删除</span></span></pre></td></tr></table></figure>
+
+<h2 id="空权限"><a href="#空权限" class="headerlink" title="空权限"></a>空权限</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ls -l</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-rw-r--r--. 1 root root 4 Mar 14 17:02 s-test</span></pre></td></tr></table></figure>
+
+<p>此文件的所有者、所属组及其他人均没有<code>x</code>权限，此时设置<code>SUID</code>、<code>SGID</code>、<code>SBIT</code>来看一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ chmod 7644 s-test</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ ls -l</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ -rwSr-Sr-T. 1 root root 4 Mar 14 17:02 s-test</span></pre></td></tr></table></figure>
+
+<p>可以发现对于没有<code>x</code>权限的文件设置这三种属性，则<code>x</code>权限位分别变为<code>S</code>、<code>S</code>和<code>T</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/19/internet/" class="archive-article-date">
-  	<time datetime="2020-01-19T09:12:20.690Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/19/internet/">internet</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/16/TCP_three_shake_hands/" class="archive-article-date">
-  	<time datetime="2020-01-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/16/TCP_three_shake_hands/">TCP 三次握手</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">TCP</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/13/linux-setuid-setgid-setbit/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/09/HSTS/" class="archive-article-date">
-  	<time datetime="2020-01-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-09</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="2020/03/12/shell-test/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">shell表达式判断</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/09/HSTS/">HSTS 安全策略及 HTTP 3XX状态码</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">HTTP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">安全</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SUID"><span class="toc-number">1.</span> <span class="toc-text">SUID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SGID"><span class="toc-number">2.</span> <span class="toc-text">SGID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBIT"><span class="toc-number">3.</span> <span class="toc-text">SBIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空权限"><span class="toc-number">4.</span> <span class="toc-text">空权限</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/01/07/php_operator/" class="archive-article-date">
-  	<time datetime="2020-01-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/07/php_operator/">PHP `??` 与 `?:` 操作符的区别</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -337,8 +421,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

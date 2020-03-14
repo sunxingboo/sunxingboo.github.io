@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>//codernote.top/2020/03/13/linux-setuid-setgid-setbit/</loc>
+    <lastmod>2020-03-14</lastmod>
+  </url>  <url>
     <loc>//codernote.top/2020/03/12/shell-test/</loc>
-    <lastmod>2020-03-12</lastmod>
+    <lastmod>2020-03-13</lastmod>
   </url>  <url>
     <loc>//codernote.top/2020/03/11/raspberry-ssh/</loc>
     <lastmod>2020-03-11</lastmod>
