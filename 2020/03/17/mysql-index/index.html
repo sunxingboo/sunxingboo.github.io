@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>shell表达式判断 | 码农笔记</title>
+  <title>MySQL索引笔记 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="test expression [ expression ]">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="提到索引，就会看到诸如聚簇索引、非聚簇索引、主键索引、唯一索引、普通索引、哈希索引、全文索引、B树索引……经常搞混，特此整理一篇索引笔记以供查阅。">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell表达式判断">
-<meta property="og:url" content="2020&#x2F;03&#x2F;12&#x2F;shell-test&#x2F;index.html">
+<meta property="og:title" content="MySQL索引笔记">
+<meta property="og:url" content="2020&#x2F;03&#x2F;17&#x2F;mysql-index&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="test expression [ expression ]">
+<meta property="og:description" content="提到索引，就会看到诸如聚簇索引、非聚簇索引、主键索引、唯一索引、普通索引、哈希索引、全文索引、B树索引……经常搞混，特此整理一篇索引笔记以供查阅。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-13T03:55:37.390Z">
+<meta property="og:updated_time" content="2020-03-19T03:25:16.338Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -155,195 +155,69 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-shell-test" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mysql-index" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      shell表达式判断
+      MySQL索引笔记
     </h1>
   
 
         
-        <a href="2020/03/12/shell-test/" class="archive-article-date">
-  	<time datetime="2020-03-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-12</time>
+        <a href="2020/03/17/mysql-index/" class="archive-article-date">
+  	<time datetime="2020-03-16T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>test expression</p>
-<p>[ expression ]</p>
-</blockquote>
+        <p>提到索引，就会看到诸如聚簇索引、非聚簇索引、主键索引、唯一索引、普通索引、哈希索引、全文索引、B树索引……经常搞混，特此整理一篇索引笔记以供查阅。</p>
 <a id="more"></a>
 
-<p><strong>测试文件的表达式</strong></p>
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>为true的条件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>file1 -ef file2</td>
-<td>file1与file2两个文件通过硬连接指向同一个文件</td>
-</tr>
-<tr>
-<td>file1 -nt file2</td>
-<td>file1比file2新</td>
-</tr>
-<tr>
-<td>file1 -ot file2</td>
-<td>file1比file2旧</td>
-</tr>
-<tr>
-<td>-b file</td>
-<td>file存在且是一个块（设备）文件</td>
-</tr>
-<tr>
-<td>-c file</td>
-<td>file存在且是一个字符（设备）文件</td>
-</tr>
-<tr>
-<td>-d file</td>
-<td>file存在且是一个目录</td>
-</tr>
-<tr>
-<td>-e file</td>
-<td>file存在</td>
-</tr>
-<tr>
-<td>-f file</td>
-<td>file存在且是一个普通文件</td>
-</tr>
-<tr>
-<td>-g file</td>
-<td>file存在且设置了组ID</td>
-</tr>
-<tr>
-<td>-G file</td>
-<td>file存在且属于有效组ID</td>
-</tr>
-<tr>
-<td>-k file</td>
-<td>file存在且有粘滞位属性</td>
-</tr>
-<tr>
-<td>-L file</td>
-<td>file存在且是一个符号链接</td>
-</tr>
-<tr>
-<td>-O file</td>
-<td>file存在并且属于有效用户ID</td>
-</tr>
-<tr>
-<td>-p file</td>
-<td>file存在并且是一个命名管道</td>
-</tr>
-<tr>
-<td>-r file</td>
-<td>file存在且可读</td>
-</tr>
-<tr>
-<td>-s file</td>
-<td>file存在且其长度大于0</td>
-</tr>
-<tr>
-<td>-S file</td>
-<td>file存在且是一个网络套接字</td>
-</tr>
-<tr>
-<td>-t fd</td>
-<td>fd是一个定向到终端/从终端定向的文件描述符，可以用来确定标准输入/输出/错误是否被重定向</td>
-</tr>
-<tr>
-<td>-u file</td>
-<td>file存在且设置了setuid位</td>
-</tr>
-<tr>
-<td>-w file</td>
-<td>file存在且可写</td>
-</tr>
-<tr>
-<td>-x file</td>
-<td>file存在且可执行</td>
-</tr>
-</tbody></table>
-<p><strong>测试字符串的表达式</strong></p>
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>为true的条件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>string</td>
-<td>string不为空</td>
-</tr>
-<tr>
-<td>-n string</td>
-<td>string长度大于0</td>
-</tr>
-<tr>
-<td>-z string</td>
-<td>string长度等于0</td>
-</tr>
-<tr>
-<td>string1 = string2<br/>string1 == string2</td>
-<td>相等</td>
-</tr>
-<tr>
-<td>string1 != string2</td>
-<td>不等</td>
-</tr>
-<tr>
-<td>string1 &gt; string2</td>
-<td>经过排序后，string1在string2之后</td>
-</tr>
-<tr>
-<td>string1 &lt; string2</td>
-<td>经过排序后，string1在string2之前</td>
-</tr>
-</tbody></table>
-<p><strong>测试数值的表达式</strong></p>
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>为true的条件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>integer1 -eq integer2</td>
-<td>integer1 等于 integer2</td>
-</tr>
-<tr>
-<td>integer1 -ne integer2</td>
-<td>integer1 不等于 integer2</td>
-</tr>
-<tr>
-<td>integer1 -le integer2</td>
-<td>integer1 小于等于 integer2</td>
-</tr>
-<tr>
-<td>integer1 -lt integer2</td>
-<td>integer1 小于 integer2</td>
-</tr>
-<tr>
-<td>integer1 -ge integer2</td>
-<td>integer1 大于等于 integer2</td>
-</tr>
-<tr>
-<td>integer1 -gt integer2</td>
-<td>integer1 大于 integer2</td>
-</tr>
-</tbody></table>
+<h2 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h2><p><strong>二叉树</strong></p>
+<p>基于平衡二叉树的查找相当于二分查找，数据的比较次数较少，但是数据量较大时，树的高度较高，查询时会产生大量的磁盘<code>IO</code>，效率极差。如下图，每一个节点就会进行一次磁盘<code>IO</code>，与查询的数据进行比对后决定查询方向。</p>
+<p>另一方面，可能会随着数据的变化退化为单链表。</p>
+<p><strong>红黑树</strong></p>
+<p>自动进行平衡的二叉树，防止退化为单链表。如上例数据进行删减后，红黑树会自动平衡生成新的平衡二叉树。</p>
+<p><strong>B树</strong></p>
+<p>B树是一颗多路平衡树，每一个节点存储多个关键字以及对应的数据，并存储指向下一层节点的指针。因为节点还存有实际数据的原因，因此每个节点存储的关键字比B+树少，数据量较大时树的高度会略高。</p>
+<p><strong>B+树</strong></p>
+<p>在B树的基础上扩展，非叶子节点只存储关键字，因此每个节点能存储更多的关键字，所以树的高度较低，磁盘<code>IO</code>次数较少。并且每个节点还存有相邻节点的指针，有利于进行范围查询。实际数据只存储在叶子节点，因此对于每一次查询都需要所搜到最后，但是由于树的高度较低，所以平均效率较好。</p>
+<p><strong>哈希</strong></p>
+<p>通过哈希算法计算数据的哈希值，得到数据的存放位置，当发生哈希碰撞时在哈希值所在位置创建一个链表来存放相同哈希值的数据。</p>
+<p>在数据量很大的情况下内存无法加载全部的数据索引。</p>
+<h2 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h2><p><strong>聚簇索引</strong></p>
+<p>聚簇索引指的是节点中存储着实际数据的索引，查找到了索引也就找到了数据。一个表只有一个聚簇索引，通常为主键索引，如果没有为表指定主键，实际上系统会隐式创建一个聚簇索引。</p>
+<p>可以理解为主索引，每一次查询实际最后查到数据都是利用这个主索引。</p>
+<p><strong>非聚簇索引</strong></p>
+<p>非聚簇索引指的是节点存储的是真实数据的主键，需要利用查询到的主键值再到主索引进行一次查询。例如复合索引、唯一索引、前缀索引。</p>
+<h2 id="MySQL的索引类型"><a href="#MySQL的索引类型" class="headerlink" title="MySQL的索引类型"></a>MySQL的索引类型</h2><p><strong>主键索引</strong></p>
+<p>一个表最多只有一个，值唯一。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">create table test(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  id int not null auto_increment,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	name varchar(10)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	primary key(id)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">alter table test add constraint pk primary key(id);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">#对于字符串字段还可以指定索引长度 name(10)</span></pre></td></tr></table></figure>
+
+<p><strong>普通索引</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">create table test(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	name varchar(10)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	index idx_name(name)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">create index idx_name on test(name);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">alter table test add index idx_name(name);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">#对于字符串字段还可以指定索引长度 name(10)</span></pre></td></tr></table></figure>
+
+<p><strong>唯一索引</strong></p>
+<p>索引列的值必须唯一，但可以为空值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">create table test(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	name varchar(10)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	unique idx_unique_name(name)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">create unique index idx_unique_name on test(name);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">alter table test add unique index idx_unique_name(name);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">#对于字符串字段还可以指定索引长度 name(10)</span></pre></td></tr></table></figure>
+
+<p><strong>联合索引 / 组合索引 / 复合索引</strong></p>
+<p>指定多个字段创建索引。如（a, b, c），则在查询条件中（a）、（a, b）、（a, c）、（a, b, c）这几种<code>and</code>组合时，索引才会生效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">create table test(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	name varchar(10),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  age tinyint,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	index idx_name_age(name, age)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">create index idx_name_age on test(name, age);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">alter table test add index idx_name_age(name, age);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">#对于字符串字段还可以指定索引长度 name(10)</span></pre></td></tr></table></figure>
+
+<p><strong>全文索引</strong></p>
+<p>主要用来查找文本中的关键字，少量的数据可以使用<code>like</code>，但当文本数据较大时这种方式效率是很低的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">create table test(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	id int not null auto_increment,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  title varchar(100) not null default &quot;&quot;,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  content text null,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  primary key(id),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  fulltext(contents)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">create fulltext index idx_fulltext_content on test(content);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">alter table test add fulltext index idx_fulltext_content(content);</span></pre></td></tr></table></figure>
+
+
+
+
+
 
       
 
@@ -357,7 +231,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">MySQL</a>
         		</li>
       		
 		</ul>
@@ -413,7 +287,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/12/shell-test/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/17/mysql-index/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -427,18 +301,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/03/13/linux-setuid-setgid-setbit/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Linux下的SUID、SGID、SBIT权限设置与作用
-        
-      </div>
-    </a>
   
-  
-    <a href="2020/03/11/raspberry-ssh/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">树莓派系统安装及设置ssh开机启动</div>
+    <a href="2020/03/13/linux-setuid-setgid-setbit/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux下的SUID、SGID、SBIT权限设置与作用</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -465,7 +330,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#索引的数据结构"><span class="toc-number">1.</span> <span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聚簇索引与非聚簇索引"><span class="toc-number">2.</span> <span class="toc-text">聚簇索引与非聚簇索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL的索引类型"><span class="toc-number">3.</span> <span class="toc-text">MySQL的索引类型</span></a></li></ol>
                     </div>
                 </span>
             </div>
