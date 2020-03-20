@@ -6,17 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>shell中的各种括号的作用 $()、${}、[]、[[]]、(())等 | 码农笔记</title>
+  <title>码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="shell中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。">
-<meta name="keywords" content="Linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="shell中的各种括号的作用 $()、${}、[]、[[]]、(())等">
-<meta property="og:url" content="2020&#x2F;03&#x2F;08&#x2F;shell-symbol&#x2F;index.html">
+  <meta name="description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
+<meta name="keywords" content="后端,Linux,算法,数据结构,前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+<meta property="og:type" content="website">
+<meta property="og:title" content="码农笔记">
+<meta property="og:url" content="page&#x2F;3&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="shell中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。">
+<meta property="og:description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-08T10:30:22.078Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -155,70 +154,30 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-shell-symbol" class="article article-type-post " itemscope itemprop="blogPost">
+            
+  
+    <article id="post-yilia-issue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      shell中的各种括号的作用 $()、${}、[]、[[]]、(())等
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/17/yilia-issue/">hexo yilia 主题点击左侧链接时打开空白页面问题</a>
     </h1>
   
 
         
-        <a href="/2020/03/08/shell-symbol/" class="archive-article-date">
-  	<time datetime="2020-03-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-08</time>
+        <a href="/2019/12/17/yilia-issue/" class="archive-article-date">
+  	<time datetime="2019-12-17T09:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>shell</code>中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。</p>
-<a id="more"></a>
-
-<h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>用于执行命令并获取命令的结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="built_in">echo</span> <span class="built_in">test</span> //第二个<span class="built_in">echo</span>无法执行，而是被当作字符串</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="built_in">test</span></span></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(<span class="built_in">echo</span> <span class="built_in">test</span>) //括号内的<span class="built_in">echo</span>被执行，整个表达式$(<span class="built_in">echo</span> <span class="built_in">test</span>)的结果为<span class="built_in">test</span>，然后第一个<span class="built_in">echo</span>命令继续执行，参数为<span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr></table></figure>
-
-<p>另一种执行命令的方式是用反引号 ``</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> `<span class="built_in">echo</span> <span class="built_in">test</span>`</span></pre></td></tr></table></figure>
-
-<p>用反引号的移植性更好，基本所有的<code>shell</code>都支持这种方式，而<code>$()</code>方式的可读性更好</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title="${}"></a>${}</h2><p>用于解析变量及精确界定变量名称的范围</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ name=<span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$name</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$name2</span>    //预期输出test2，但是输出为空，shell认为此时的变量名为name2，而name2未定义</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span>2  //使用<span class="variable">$&#123;name&#125;</span>明确界定出了变量name的变量名范围，与2构成test2字符串</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">test2</span></pre></td></tr></table></figure>
-
-<h2 id="-2"><a href="#-2" class="headerlink" title="[]"></a>[]</h2><p>等同于<code>test</code>命令，用于判断给定的表达式是否成立</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [1 -eq 2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">zsh: bad pattern: [1</span></pre></td></tr></table></figure>
-
-<p>使用<code>[]</code>时，左括号的右侧和右括号的左侧必须有一个以上的空格，不然会报错</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [ 1 &gt; 2 ]	//会在当前目录生成一个名为2的文件</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ [ 1 &lt; 2 ] //会尝试读取名为2的文件，若不存在则会报错，若存在此表达式被判断为真</span></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [ 1 \&gt; 2 ]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ [ 1 \&lt; 2 ]</span></pre></td></tr></table></figure>
-
-<p>若使用<code>&gt;</code>及<code>&lt;</code>则必须进行转译，不然会被认为是重定向</p>
-<h2 id="-3"><a href="#-3" class="headerlink" title="[[]]"></a>[[]]</h2><p><code>[[]]</code>是<code>test</code>及<code>[]</code>命令的增强版，增加了一个字符串表达式<code>string=~regex</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [[ <span class="string">"test"</span> =~ ^-?[0-9]+$ ]]</span></pre></td></tr></table></figure>
-
-
-
-<p>在<code>[[]]</code>中使用<code>&lt;</code>和<code>&gt;</code>，不需要转译</p>
-<p>在<code>[[]]</code>中的<code>==</code>支持模式匹配</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ file=test.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ [[ <span class="variable">$file</span> == <span class="built_in">test</span>.* ]]</span></pre></td></tr></table></figure>
-
-<h2 id="-4"><a href="#-4" class="headerlink" title="(())"></a>(())</h2><p><code>(())</code>是为整数设计的，只能用于处理整数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ (( <span class="string">""</span> == <span class="string">"t"</span> )) 	//报错</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ (( 1 == 2 ))			//<span class="literal">false</span></span></pre></td></tr></table></figure>
-
-<p>与<code>[[]]</code>类似，<code>(())</code>中使用<code>&lt;</code>和<code>&gt;</code>也是不需要转译的</p>
-<h2 id="与"><a href="#与" class="headerlink" title="$[]与$(())"></a>$[]与$(())</h2><p><code>$[]</code>与<code>$(())</code>是相同的，都是用于数学运算</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">//这里的左括号右边与右括号左边的空格不是必须的</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( (5+1)/2%2 ))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $[ (5+1)/2%2 ]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">1</span></pre></td></tr></table></figure>
-
-<p>默认的输出结果为十进制，<code>$(())</code>还可以进行不同进位的运算（二进制、八进制、十六进制等转为十进制），指定进制及数值，输出其十进制的值</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">//$(( 进制<span class="comment">#数值 ))</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( 2<span class="comment">#10 )) //2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( 8<span class="comment">#12 )) //10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( 16<span class="comment">#B )) //11</span></span></pre></td></tr></table></figure>
-
-
+        <p>解决办法：修改 <code>themes/yilia/layout/_partial/post/left-col.ejs</code> 文件中 <code>&lt;nav class=&quot;header-smart-menu&quot;&gt;</code>。</p>
+        
       
 
       
@@ -231,7 +190,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">hexo</a>
         		</li>
       		
 		</ul>
@@ -240,84 +199,16 @@
       
 
       
-
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/17/yilia-issue/">Read More >></a>
+        </p>
       
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/08/shell-symbol/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="2020/03/08/position-param/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          shell位置参数
-        
-      </div>
-    </a>
-  
-  
-    <a href="2020/03/05/compress/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">linux的几种压缩工具</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -332,32 +223,17 @@
         </div>
         
         
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">$()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-number">2.</span> <span class="toc-text">${}</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-2"><span class="toc-number">3.</span> <span class="toc-text">[]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-3"><span class="toc-number">4.</span> <span class="toc-text">[[]]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-4"><span class="toc-number">5.</span> <span class="toc-text">(())</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与"><span class="toc-number">6.</span> <span class="toc-text">$[]与$(())</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
     </div>
 </aside>
 
 
 
-  
-  
-  
 
   
-
   
-
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/2/">Prev</a><a class="page-number" href="">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
   
 
 
@@ -380,8 +256,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
-		isPost: true,
+		isHome: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>shell中的各种括号的作用 $()、${}、[]、[[]]、(())等 | 码农笔记</title>
+  <title>sort与uniq命令的使用 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="shell中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。">
+  <meta name="description" content="sort命令将文件进行排序，并将排序结果标准输出。sort命令既可以从特定的文件，也可以从stdin中获取输入。 uniq命令用于报告或忽略文件中的重复行，一般与sort命令结合使用。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell中的各种括号的作用 $()、${}、[]、[[]]、(())等">
-<meta property="og:url" content="2020&#x2F;03&#x2F;08&#x2F;shell-symbol&#x2F;index.html">
+<meta property="og:title" content="sort与uniq命令的使用">
+<meta property="og:url" content="2020&#x2F;03&#x2F;19&#x2F;sort-and-uniq&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="shell中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。">
+<meta property="og:description" content="sort命令将文件进行排序，并将排序结果标准输出。sort命令既可以从特定的文件，也可以从stdin中获取输入。 uniq命令用于报告或忽略文件中的重复行，一般与sort命令结合使用。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-08T10:30:22.078Z">
+<meta property="og:updated_time" content="2020-03-20T03:15:40.111Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -155,69 +155,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-shell-symbol" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-sort-and-uniq" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      shell中的各种括号的作用 $()、${}、[]、[[]]、(())等
+      sort与uniq命令的使用
     </h1>
   
 
         
-        <a href="/2020/03/08/shell-symbol/" class="archive-article-date">
-  	<time datetime="2020-03-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-08</time>
+        <a href="/2020/03/19/sort-and-uniq/" class="archive-article-date">
+  	<time datetime="2020-03-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>shell</code>中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。</p>
+        <blockquote>
+<p><strong>sort命令</strong>将文件进行排序，并将排序结果标准输出。sort命令既可以从特定的文件，也可以从stdin中获取输入。</p>
+<p><strong>uniq命令</strong>用于报告或忽略文件中的重复行，一般与sort命令结合使用。</p>
+</blockquote>
 <a id="more"></a>
 
-<h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>用于执行命令并获取命令的结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="built_in">echo</span> <span class="built_in">test</span> //第二个<span class="built_in">echo</span>无法执行，而是被当作字符串</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="built_in">test</span></span></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(<span class="built_in">echo</span> <span class="built_in">test</span>) //括号内的<span class="built_in">echo</span>被执行，整个表达式$(<span class="built_in">echo</span> <span class="built_in">test</span>)的结果为<span class="built_in">test</span>，然后第一个<span class="built_in">echo</span>命令继续执行，参数为<span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr></table></figure>
 
-<p>另一种执行命令的方式是用反引号 ``</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> `<span class="built_in">echo</span> <span class="built_in">test</span>`</span></pre></td></tr></table></figure>
+<p><strong>sort命令的选项参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">-b	--ignore-leading-blanks		默认情况下整行都会进行排序，添加这个选项sort会忽略行开头的空格，从第一个非空白字符开始排序</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-f	--ignore-case							排序时不区分字母大小写</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">-n	--numeric-sort						按数值大小排序</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">-r	--reverse									逆序排序</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">-k	--key=filed1[,filed2]			对指定的列进行排序，而不是整个文本行</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">-m	--merge										将每个输入参数当作以排好序的文件名。将多个文件合并为一个排好序的文件而不执行额外的排序操作</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">-o	--output=file							将排序结果输出到文件而不是标准输出</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">-t	--filed-separator=char		定义字段分隔符，默认分隔符为空格或制表符</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">-u 	--unique									去除重复行并排序</span></pre></td></tr></table></figure>
 
-<p>用反引号的移植性更好，基本所有的<code>shell</code>都支持这种方式，而<code>$()</code>方式的可读性更好</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title="${}"></a>${}</h2><p>用于解析变量及精确界定变量名称的范围</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ name=<span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$name</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$name2</span>    //预期输出test2，但是输出为空，shell认为此时的变量名为name2，而name2未定义</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span>2  //使用<span class="variable">$&#123;name&#125;</span>明确界定出了变量name的变量名范围，与2构成test2字符串</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">test2</span></pre></td></tr></table></figure>
+<p><code>-k</code>选项的用法相对比较复杂</p>
+<p>创建一段示例文本</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a <span class="number">50</span> 	baidu</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d <span class="number">2000</span> 	ali</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">e <span class="number">50</span> 	google</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">c <span class="number">30</span> 	byte</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">b <span class="number">100</span> 	jd</span></pre></td></tr></table></figure>
 
-<h2 id="-2"><a href="#-2" class="headerlink" title="[]"></a>[]</h2><p>等同于<code>test</code>命令，用于判断给定的表达式是否成立</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [1 -eq 2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">zsh: bad pattern: [1</span></pre></td></tr></table></figure>
+<p>直接用<code>sort</code>排序</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sort data.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a <span class="number">50</span> 	baidu</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">b <span class="number">100</span> 	jd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">c <span class="number">30</span> 	byte</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">d <span class="number">2000</span> 	ali</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">e <span class="number">50</span> 	google</span></pre></td></tr></table></figure>
 
-<p>使用<code>[]</code>时，左括号的右侧和右括号的左侧必须有一个以上的空格，不然会报错</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [ 1 &gt; 2 ]	//会在当前目录生成一个名为2的文件</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ [ 1 &lt; 2 ] //会尝试读取名为2的文件，若不存在则会报错，若存在此表达式被判断为真</span></pre></td></tr></table></figure>
+<p>使用<code>-k</code>选项指定排序第二行，不指定结束字段的话默认从指定字段扩展到行尾，也就是说<code>-k 2</code>在下面的第一个示例排序中其实是等价于<code>-k 2,3</code>的。</p>
+<p>但是当增加了<code>-n</code>选项时，不会默认扩展到行尾，也就是说<code>-k 2n</code>不等价于<code>-k 2,3n</code>、<code>-k 2n,3</code>、<code>-k 2n,3n</code>，这是因为按数值排序则程序只能识别数字前的符号<code>-</code>，除此之外当遇到其他非数字时就会终止此次排序。因此<code>-k 2n</code>等价于<code>-k 2,2n</code>、<code>-k 2n,2</code>、<code>-k 2n,2n</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sort -k 2 data.txt	<span class="comment">#这里第二列按字符顺序进行了排序，使用-n选项排序才符合预期</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b 100 	jd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d 2000 	ali</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">c 30 	byte</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">a 50 	baidu</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">e 50 	google</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">$ sort -k 2n data.txt	<span class="comment">#也可以写为 sort -k 2 -n data.txt</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">c 30 	byte</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">a 50 	baidu</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">e 50 	google</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">b 100 	jd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d 2000 	ali</span></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [ 1 \&gt; 2 ]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ [ 1 \&lt; 2 ]</span></pre></td></tr></table></figure>
-
-<p>若使用<code>&gt;</code>及<code>&lt;</code>则必须进行转译，不然会被认为是重定向</p>
-<h2 id="-3"><a href="#-3" class="headerlink" title="[[]]"></a>[[]]</h2><p><code>[[]]</code>是<code>test</code>及<code>[]</code>命令的增强版，增加了一个字符串表达式<code>string=~regex</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ [[ <span class="string">"test"</span> =~ ^-?[0-9]+$ ]]</span></pre></td></tr></table></figure>
+<p>指定字段字符进行排序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sort -k 3.2 data.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d 2000 	ali</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">a 50 	baidu</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">c 30 	byte</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">e 50 	google</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">b 100 	jd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">$ sort -k 3.2,3.3 data.txt <span class="comment">#对第三列的第二个字符开始到第三个字符进行排序</span></span></pre></td></tr></table></figure>
 
 
 
-<p>在<code>[[]]</code>中使用<code>&lt;</code>和<code>&gt;</code>，不需要转译</p>
-<p>在<code>[[]]</code>中的<code>==</code>支持模式匹配</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ file=test.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ [[ <span class="variable">$file</span> == <span class="built_in">test</span>.* ]]</span></pre></td></tr></table></figure>
+<p><strong>uniq命令的选项参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">-c		--count							在每一行前显示该行出现的次数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-d		--repeated					仅显示重复出现的行</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">-f n	--skip-fileds=num		忽略每行的前n个字段，字段间以空格分开（uniq命令无法指定分隔符）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">-i		--ignore-case				行与行之间比较时忽略大小写</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">-s c	--skip-chars=chars	忽略每行的前c个字符</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">-u		--unique						仅输出不重复的行，此选项是默认的</span></pre></td></tr></table></figure>
 
-<h2 id="-4"><a href="#-4" class="headerlink" title="(())"></a>(())</h2><p><code>(())</code>是为整数设计的，只能用于处理整数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ (( <span class="string">""</span> == <span class="string">"t"</span> )) 	//报错</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ (( 1 == 2 ))			//<span class="literal">false</span></span></pre></td></tr></table></figure>
+<p>测试文本</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">bbb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">ccc</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">eee</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">ddd</span></pre></td></tr></table></figure>
 
-<p>与<code>[[]]</code>类似，<code>(())</code>中使用<code>&lt;</code>和<code>&gt;</code>也是不需要转译的</p>
-<h2 id="与"><a href="#与" class="headerlink" title="$[]与$(())"></a>$[]与$(())</h2><p><code>$[]</code>与<code>$(())</code>是相同的，都是用于数学运算</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">//这里的左括号右边与右括号左边的空格不是必须的</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( (5+1)/2%2 ))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $[ (5+1)/2%2 ]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">1</span></pre></td></tr></table></figure>
+<p><code>uniq</code>命令基本要配合<code>sort</code>命令，在排序好文件之后使用。先单独尝试一下效果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ uniq -c data.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">1 aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">1 bbb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">1 aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">1 ccc</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">1 aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">1 eee</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">1 ddd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每一行前都标注了出现一次，但是并没有进行统计</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">$ sort data.txt | uniq -c</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">3 aaa</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">1 bbb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">1 ccc</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">1 ddd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">1 eee</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 排序并进行了出现次数统计</span></span></pre></td></tr></table></figure>
 
-<p>默认的输出结果为十进制，<code>$(())</code>还可以进行不同进位的运算（二进制、八进制、十六进制等转为十进制），指定进制及数值，输出其十进制的值</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">//$(( 进制<span class="comment">#数值 ))</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( 2<span class="comment">#10 )) //2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( 8<span class="comment">#12 )) //10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $(( 16<span class="comment">#B )) //11</span></span></pre></td></tr></table></figure>
+<p>与之类似，<code>-u</code>参数只能去除相邻的重复行，<code>-d</code>参数只能输出相邻的重复行。</p>
+<p><strong>使用案例</strong></p>
+<p>获取系统中最常使用前十个命令以及使用的总次数</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ history | awk -F <span class="string">" "</span> '&#123;print $<span class="number">2</span>&#125;' | sort | uniq -c | sort -k <span class="number">1</span>bnr | head <span class="number">-10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> <span class="number">234</span> ls</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"> <span class="number">115</span> git</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="number">92</span> cd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="number">54</span> echo</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="number">51</span> ssh</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  <span class="number">41</span> vim</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  <span class="number">40</span> cat</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  <span class="number">34</span> rm</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="number">27</span> mv</span></pre></td></tr></table></figure>
 
+<ul>
+<li>首先将<code>history</code>的输出管道到<code>awk</code></li>
+<li><code>awk</code>指定以空格为分隔符，输出第二列（也就是具体命令列）</li>
+<li>管道到<code>sort</code>进行排序</li>
+<li>之后将结果管道到<code>uniq</code>为每条命令进行计数</li>
+<li>然后继续将结果管道到<code>sort</code>根据第一列按数值倒序排序</li>
+<li>最后利用<code>head</code>取结果的前十条</li>
+</ul>
 
       
 
@@ -287,7 +293,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/08/shell-symbol/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/19/sort-and-uniq/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +307,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/03/08/position-param/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          shell位置参数
-        
-      </div>
-    </a>
   
-  
-    <a href="2020/03/05/compress/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">linux的几种压缩工具</div>
+    <a href="2020/03/17/mysql-index/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL索引笔记</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +336,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">$()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-number">2.</span> <span class="toc-text">${}</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-2"><span class="toc-number">3.</span> <span class="toc-text">[]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-3"><span class="toc-number">4.</span> <span class="toc-text">[[]]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-4"><span class="toc-number">5.</span> <span class="toc-text">(())</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与"><span class="toc-number">6.</span> <span class="toc-text">$[]与$(())</span></a></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
