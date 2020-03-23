@@ -39,6 +39,43 @@
   </entry>
   
   <entry>
+    <title>Redis主从复制</title>
+    <link href="2020/03/22/redis-replica/"/>
+    <id>2020/03/22/redis-replica/</id>
+    <published>2020-03-21T16:00:00.000Z</published>
+    <updated>2020-03-23T10:04:20.402Z</updated>
+    
+    <content type="html"><![CDATA[<pre class="mermaid">graph TB    A[master]    B[slave]    C[slave]    D[slave]    E[slave]    F[slave]    A-->B    A-->C    A-->D    C-->E    D-->F</pre><p>单机的<code>Redis</code>容易发生单点故障，服务器负载较大时的处理性能也有很大局限。</p><p>因此<code>Redis</code>提供主从复制机制，可以提高发生灾难性问题时数据的安全性，也能分担服务器负载压力。</p><p>网络内只有一个<code>master</code>节点，多个<code>slave</code>节点，<code>master</code>节点有多个<code>slave</code>，一个<code>slave</code>只有一个<code>master</code>节点。如上图所示。</p><a id="more"></a><h2 id="相关命令与配置"><a href="#相关命令与配置" class="headerlink" title="相关命令与配置"></a>相关命令与配置</h2><h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">replicaof &lt;masterip&gt; &lt;masterport&gt;</span></pre></td></tr></table></figure><p>将当前<code>redis</code>服务器设置为指定<code>master</code>节点的<code>slave</code>节点。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">replicaof no one</span></pre></td></tr></table></figure><p>取消复制。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">role</span></pre></td></tr></table></figure><p>查看节点角色</p><p><code>master</code>执行此命令返回 3 个元素的列表：</p><ul><li>字符串<code>master</code></li><li>主服务器的复制偏移量</li><li>记录所有下属<code>slave</code>节点的数组<ul><li><code>IP</code></li><li>端口号</li><li>复制偏移量（当与主服务器的复制偏移量一直时，主从数据才是同步的）</li></ul></li></ul><p><code>slave</code>执行此命令返回 5 个元素组成的列表：</p><ul><li>字符串<code>slave</code></li><li><code>master</code>的<code>IP</code></li><li><code>master</code>的端口号</li><li>目前与主服务器的链接状态<ul><li><code>none</code></li><li><code>connect</code></li><li><code>connecting</code></li><li><code>sync</code></li><li><code>connected</code></li><li><code>unkonwn</code></li></ul></li></ul><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">replica-read-only &lt; yes | no &gt;</span></pre></td></tr></table></figure><p>设置从<code>slave</code>节点的只读模式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">repl-diskless-sync &lt; yes | no &gt;</span></pre></td></tr></table></figure><p>默认为<code>no</code>，完整同步数据时，<code>master</code>节点创建<code>RDB</code>文件并传给<code>slave</code>。</p><p>如果设为<code>yes</code>，则<code>master</code>创建子进程并在其中创建当前数据的<code>RDB</code>数据并直接传给<code>slave</code>（不写入<code>master</code>节点的磁盘），但是在<code>slave</code>节点接受到<code>RDB</code>数据后依然需要写盘。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">repl-diskless-sync-delay &lt;seconds&gt;</span></pre></td></tr></table></figure><p><code>repl-diskless-sync</code>选项开启后，可以用这个选项来配置传输延迟的秒数。</p><p>在这个等待时间内可能有多个<code>slave</code>连接上来，这样就可以一起传输，否则一旦传输开始，后链接上的<code>slave</code>只能等待。</p><p>禁用的话可以设置为 0。</p><h2 id="数据同步方式"><a href="#数据同步方式" class="headerlink" title="数据同步方式"></a>数据同步方式</h2><h3 id="完整同步"><a href="#完整同步" class="headerlink" title="完整同步"></a>完整同步</h3><p>当一个节点成为一个主节点的从节点之后，会进行一次完整的同步：</p><pre class="mermaid">graph TB    A[从节点清空原有数据]    B[主节点bgsave生成RDB文件  并且在这之后执行的命令写入缓冲区]    C[通过套接字将RDB传给从节点]    D[从节点载入RDB数据]    E[从节点上线运行]    F[主节点将缓冲区中的命令传给从节点]    G[从节点执行命令]    H[主从数据完成同步]    A-->B    B-->C    C-->D    D-->E    E-->F    F-->G    G-->H</pre><h3 id="在线更新"><a href="#在线更新" class="headerlink" title="在线更新"></a>在线更新</h3><p>主服务器有新的命令执行后，就会将命令发送给从服务器，从服务器执行成功后，完成数据的在线更新。</p><pre class="mermaid">sequenceDiagram     participant client    participant master    participant slave    client->>master: 命令    master->>master:执行命令    master->>slave: 将命令发送给slave    slave->>slave: 执行命令</pre><p>在<code>slave</code>节点执行了命令之后，数据完成同步。</p><p>但是可以看出，从<code>master</code>执行了命令，到<code>slave</code>执行完成命令这一段时间，数据存在短暂的不一致。</p><h3 id="部分同步"><a href="#部分同步" class="headerlink" title="部分同步"></a>部分同步</h3><p>当下线的节点重新上线时，与主服务器数据已不再一致，此时需要进行同步。</p><p>老的处理方法是进行一次完整同步，但如果这个从服务器只是短暂下线，那么数据的差异很小，进行完整同步就十分没有必要并且很耗费资源。</p><p>新的数据同步策略是：</p><pre class="mermaid">sequenceDiagram     participant client    participant master    participant queue    participant slave    slave->>slave: 下线    client->>master: 命令    master->>master: 执行命令    master->>queue: 将命令放入队列    slave->>slave: 重新上线    slave->>master: 复制请求    queue->>slave: 发送队列内的命令</pre><p>在<code>slave</code>重新上线后，<code>master</code>先查看<code>slave</code>下线期间执行的命令是否在队列内，如果在则将命令发送给<code>slave</code>，否则执行一次完整同步。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">repl-backlog-size &lt;size&gt;</span></pre></td></tr></table></figure><p>可以通过这个配置来设置<code>FIFO</code>队列的大小。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre class=&quot;mermaid&quot;&gt;graph TB
+    A[master]
+    B[slave]
+    C[slave]
+    D[slave]
+    E[slave]
+    F[slave]
+
+    A--&gt;B
+    A--&gt;C
+    A--&gt;D
+    C--&gt;E
+    D--&gt;F&lt;/pre&gt;
+
+&lt;p&gt;单机的&lt;code&gt;Redis&lt;/code&gt;容易发生单点故障，服务器负载较大时的处理性能也有很大局限。&lt;/p&gt;
+&lt;p&gt;因此&lt;code&gt;Redis&lt;/code&gt;提供主从复制机制，可以提高发生灾难性问题时数据的安全性，也能分担服务器负载压力。&lt;/p&gt;
+&lt;p&gt;网络内只有一个&lt;code&gt;master&lt;/code&gt;节点，多个&lt;code&gt;slave&lt;/code&gt;节点，&lt;code&gt;master&lt;/code&gt;节点有多个&lt;code&gt;slave&lt;/code&gt;，一个&lt;code&gt;slave&lt;/code&gt;只有一个&lt;code&gt;master&lt;/code&gt;节点。如上图所示。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="Redis" scheme="//codernote.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>sort与uniq命令的使用</title>
     <link href="2020/03/19/sort-and-uniq/"/>
     <id>2020/03/19/sort-and-uniq/</id>
