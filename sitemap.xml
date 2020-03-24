@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>2020/03/24/http-status-code/</loc>
+    
+    <lastmod>2020-03-24T10:59:48.241Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>2020/03/22/redis-replica/</loc>
     
     <lastmod>2020-03-23T10:04:20.402Z</lastmod>

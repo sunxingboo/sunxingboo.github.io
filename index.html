@@ -156,28 +156,51 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-redis-persistence" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-http-status-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/22/redis-persistence/">Redis数据持久化</a>
+      <a class="article-title" href="/2020/03/24/http-status-code/">HTTP状态码</a>
     </h1>
   
 
         
-        <a href="/2020/03/22/redis-persistence/" class="archive-article-date">
-  	<time datetime="2020-03-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-22</time>
+        <a href="/2020/03/24/http-status-code/" class="archive-article-date">
+  	<time datetime="2020-03-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>Redis</code>的所有数据都在内存中，断电后将全部丢失。数据的持久化功能就是为了解决这一问题。</p>
-<p><code>Redis</code>提供了<code>RDB</code>、<code>AOF</code>以及<code>RDB-AOF</code>混合模式。</p>
+        <h2 id="1XX"><a href="#1XX" class="headerlink" title="1XX"></a>1XX</h2><p>以 1 开头的状态码代表请求已被接受，需要继续处理。</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Describe</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>100</td>
+<td>Continue</td>
+<td>服务器已经接收到请求头，并且客户端应继续发送请求主体</td>
+</tr>
+<tr>
+<td>101</td>
+<td>Switching Protocols</td>
+<td>服务器已经理解了客户端的请求，并将通过Upgrade消息头通知客户端采<br>用不同的协议来完成这个请求。</td>
+</tr>
+<tr>
+<td>102</td>
+<td>Processing</td>
+<td>请求可能包含许多涉及文件操作的子请求，需要很长时间才能完成请求。<br>该代码表示服务器已经收到并正在处理请求，但无响应可用。<br>这样可以防止客户端超时，并假设请求丢失</td>
+</tr>
+</tbody></table>
         
       
 
@@ -191,7 +214,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Redis</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">HTTP</a>
         		</li>
       		
 		</ul>
@@ -201,7 +224,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/22/redis-persistence/">Read More >></a>
+          <a class="article-more-a" href="/2020/03/24/http-status-code/">Read More >></a>
         </p>
       
 
@@ -292,6 +315,81 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/03/22/redis-replica/">Read More >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-redis-persistence" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/22/redis-persistence/">Redis数据持久化</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/22/redis-persistence/" class="archive-article-date">
+  	<time datetime="2020-03-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>Redis</code>的所有数据都在内存中，断电后将全部丢失。数据的持久化功能就是为了解决这一问题。</p>
+<p><code>Redis</code>提供了<code>RDB</code>、<code>AOF</code>以及<code>RDB-AOF</code>混合模式。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/22/redis-persistence/">Read More >></a>
         </p>
       
 
@@ -883,80 +981,6 @@
 
 
   
-    <article id="post-shell-symbol" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/08/shell-symbol/">shell中的各种括号的作用 $()、${}、[]、[[]]、(())等</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/08/shell-symbol/" class="archive-article-date">
-  	<time datetime="2020-03-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>shell</code>中有很多长相相似的括号命令，经常弄混，特此整理它们各自的作用。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/08/shell-symbol/">Read More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next</a>
@@ -1083,7 +1107,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1091,19 +1115,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">JavaScript</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1116,6 +1136,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">MySQL</a>
               </li>
             
             <div class="clearfix"></div>
