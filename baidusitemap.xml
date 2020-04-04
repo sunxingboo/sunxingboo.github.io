@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>//codernote.top/2020/04/04/go-new-make/</loc>
+    <lastmod>2020-04-04</lastmod>
+  </url>  <url>
     <loc>//codernote.top/2020/03/24/http-status-code/</loc>
     <lastmod>2020-03-24</lastmod>
   </url>  <url>
@@ -64,10 +67,10 @@
     <loc>//codernote.top/2019/12/28/set/</loc>
     <lastmod>2020-01-11</lastmod>
   </url>  <url>
-    <loc>//codernote.top/2019/12/20/xargs/</loc>
+    <loc>//codernote.top/2019/12/17/yilia-issue/</loc>
     <lastmod>2020-01-11</lastmod>
   </url>  <url>
-    <loc>//codernote.top/2019/12/17/yilia-issue/</loc>
+    <loc>//codernote.top/2019/12/20/xargs/</loc>
     <lastmod>2020-01-11</lastmod>
   </url>  <url>
     <loc>//codernote.top/2020/01/09/HSTS/</loc>

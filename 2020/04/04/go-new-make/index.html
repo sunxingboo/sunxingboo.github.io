@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>Tag: Linux | 码农笔记</title>
+  <title>Golang中new()与make()的作用与区别 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
-<meta name="keywords" content="后端,Linux,算法,数据结构,前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码农笔记">
-<meta property="og:url" content="tags&#x2F;Linux&#x2F;&#x2F;page&#x2F;2&#x2F;index.html">
+  <meta name="keywords" content="Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang中new()与make()的作用与区别">
+<meta property="og:url" content="2020&#x2F;04&#x2F;04&#x2F;go-new-make&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;blog-static-resources.oss-cn-beijing.aliyuncs.com&#x2F;blogImg&#x2F;golang.jpeg">
+<meta property="og:updated_time" content="2020-04-04T12:11:37.988Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;blog-static-resources.oss-cn-beijing.aliyuncs.com&#x2F;blogImg&#x2F;golang.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
   
@@ -154,63 +155,189 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-go-new-make" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/20/xargs/" class="archive-article-date">
-  	<time datetime="2019-12-20T09:13:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/20/xargs/">xargs 命令及常用参数</a>
+    <h1 class="article-title" itemprop="name">
+      Golang中new()与make()的作用与区别
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/04/04/go-new-make/" class="archive-article-date">
+  	<time datetime="2020-04-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://blog-static-resources.oss-cn-beijing.aliyuncs.com/blogImg/golang.jpeg" alt="golang"></p>
+<a id="more"></a>
+
+<p>先看一下源码中这两个函数的说明</p>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// The new built-in function allocates memory. The first argument is a type,</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// not a value, and the value returned is a pointer to a newly</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// allocated zero value of that type.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">new</span><span class="params">(Type)</span> *<span class="title">Type</span></span></span></pre></td></tr></table></figure>
+
+<p>内置函数<code>new</code>分配内存。</p>
+<p>第一个参数是一个类型，而不是值，这个函数会分配一个这个类型的零值，并返回这个零值的指针。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"reflect"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TestNew <span class="keyword">struct</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	str <span class="keyword">string</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">	t1 := <span class="built_in">new</span>(TestNew)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	t2 := &amp;TestNew&#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(reflect.TypeOf(t1), reflect.TypeOf(t2))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// *main.TestNew *main.TestNew</span></span></pre></td></tr></table></figure>
+
+<p>这两种创建变量的方式作用是相同的。</p>
+<h2 id="make"><a href="#make" class="headerlink" title="make"></a>make</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// The make built-in function allocates and initializes an object of type</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// slice, map, or chan (only). Like new, the first argument is a type, not a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// value. Unlike new, make's return type is the same as the type of its</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// argument, not a pointer to it. The specification of the result depends on</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// the type:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	Slice: The size specifies the length. The capacity of the slice is</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	equal to its length. A second integer argument may be provided to</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	specify a different capacity; it must be no smaller than the</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	length. For example, make([]int, 0, 10) allocates an underlying array</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	of size 10 and returns a slice of length 0 and capacity 10 that is</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	backed by this underlying array.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	Map: An empty map is allocated with enough space to hold the</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	specified number of elements. The size may be omitted, in which case</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	a small starting size is allocated.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	Channel: The channel's buffer is initialized with the specified</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	buffer capacity. If zero, or the size is omitted, the channel is</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//	unbuffered.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">make</span><span class="params">(t Type, size ...IntegerType)</span> <span class="title">Type</span></span></span></pre></td></tr></table></figure>
+
+<p>内置函数<code>make</code>分配并初始化一个<code>slice</code>、<code>map</code>或者<code>chan</code>对象（只支持这三种）。</p>
+<p>与<code>new</code>函数相似，第一个参数是一个类型，而不是值。</p>
+<p>与<code>new</code>不同的是，<code>make</code>函数的返回值的类型与它的参数指定的类型相同，而不是指向这个类型的指针。</p>
+<p>其返回值依赖于具体传入的类型：</p>
+<ul>
+<li><code>slice</code>：<code>size</code>指定切片的长度。第二个<code>int</code>参数可以指定切片长度。第三个参数指定切片容量，这个值必须不小于长度。</li>
+<li><code>map</code>：根据<code>size</code>指定的数量来分配足够的空间容纳元素的空<code>map</code>。忽略<code>size</code>参数则会默认分配一个较小的初始长度的<code>map</code>。</li>
+<li><code>channel</code>：通道的缓冲区通过指定的缓冲区容量来初始化。如果<code>size</code>参数值为 0 或者被省略，则这个通道是没有缓冲区的（简单举例就是写入一个数据就会进入阻塞状态）。</li>
+</ul>
+<p>初始化<code>map</code>和<code>channel</code>时，可以忽略<code>size</code>参数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span></pre></td></tr></table></figure>
+
+<p>初始化<code>slice</code>时必须指定长度，容量可以忽略。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>([]<span class="keyword">int</span>)       <span class="comment">//错误</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">2</span>)    <span class="comment">//长度和容量均为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">2</span>, <span class="number">3</span>) <span class="comment">//长度为2，容量为3</span></span></pre></td></tr></table></figure>
+
+<p>初始化<code>channel</code>时指定缓冲区容量</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">3</span>)</span></pre></td></tr></table></figure>
+
+<p>对于<code>slice</code>和<code>channel</code>均可以使用内置函数<code>len</code>获取长度，使用<code>cap</code>获取容量，而对于<code>map</code>不能使用<code>cap</code>函数。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">Go</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/04/04/go-new-make/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="2020/03/24/http-status-code/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HTTP状态码</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#new"><span class="toc-number">1.</span> <span class="toc-text">new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make"><span class="toc-number">2.</span> <span class="toc-text">make</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="tags/Linux/">Prev</a><a class="page-number" href="tags/Linux/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
   
 
 
@@ -234,9 +361,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
