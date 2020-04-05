@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="码农笔记">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;blog-static-resources.oss-cn-beijing.aliyuncs.com&#x2F;blogImg&#x2F;golang.jpg">
-<meta property="og:updated_time" content="2020-04-04T12:18:44.382Z">
+<meta property="og:updated_time" content="2020-04-05T09:37:25.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;blog-static-resources.oss-cn-beijing.aliyuncs.com&#x2F;blogImg&#x2F;golang.jpg">
   
@@ -207,6 +207,10 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">3</span>)</span></pre></td></tr></table></figure>
 
 <p>对于<code>slice</code>和<code>channel</code>均可以使用内置函数<code>len</code>获取长度，使用<code>cap</code>获取容量，而对于<code>map</code>不能使用<code>cap</code>函数。</p>
+<p><code>map</code>是没有大小或长度的限制的。比如初始化一个指定容量的<code>map</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">m[<span class="string">"t1"</span>] = <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">m[<span class="string">"t2"</span>] = <span class="number">2</span> <span class="comment">//此时已经超出指定的容量1，会动态的调整大小</span></span></pre></td></tr></table></figure>
+
+<p>频繁的调整会影响性能，因此当定义一个元素数量的增长趋势比较大的<code>map</code>时。应该大致的预定义一个容量，而不是让它频繁的触发容量调整。</p>
 
       
 
@@ -456,19 +460,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -476,7 +472,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,10 +493,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
