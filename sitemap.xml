@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>2020/04/05/go-panic-recover-defer/</loc>
+    
+    <lastmod>2020-04-06T13:35:51.054Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>2020/04/04/go-new-make/</loc>
     
     <lastmod>2020-04-05T09:37:25.162Z</lastmod>

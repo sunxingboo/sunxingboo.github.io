@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>树莓派系统安装及设置ssh开机启动 | 码农笔记</title>
+  <title>golang的异常处理 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="资源及工具  国内在官网下载系统镜像会很慢，经过搜索一番之后找到此高速资源。  如需格式化 SD 卡可使用这款工具。  使用 win32DiskImager 将系统写入 SD 卡   开启ssh服务 开机尝试ssh登陆，请求被拒绝，对于这个问题有一些旧答案说需要在&#x2F;boot分区下创建一个名为ssh的空白文件，并尝试重sshd服务。而实际上新版本的系统已经不需要这样设置了，只需要开启ssh服务。 1">
-<meta name="keywords" content="Linux,树莓派">
+  <meta name="keywords" content="Go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="树莓派系统安装及设置ssh开机启动">
-<meta property="og:url" content="2020&#x2F;03&#x2F;11&#x2F;raspberry-ssh&#x2F;index.html">
+<meta property="og:title" content="golang的异常处理">
+<meta property="og:url" content="2020&#x2F;04&#x2F;05&#x2F;go-panic-recover-defer&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="资源及工具  国内在官网下载系统镜像会很慢，经过搜索一番之后找到此高速资源。  如需格式化 SD 卡可使用这款工具。  使用 win32DiskImager 将系统写入 SD 卡   开启ssh服务 开机尝试ssh登陆，请求被拒绝，对于这个问题有一些旧答案说需要在&#x2F;boot分区下创建一个名为ssh的空白文件，并尝试重sshd服务。而实际上新版本的系统已经不需要这样设置了，只需要开启ssh服务。 1">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-11T08:42:37.343Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;blog-static-resources.oss-cn-beijing.aliyuncs.com&#x2F;blogImg&#x2F;golang.jpg">
+<meta property="og:updated_time" content="2020-04-06T13:35:51.054Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;blog-static-resources.oss-cn-beijing.aliyuncs.com&#x2F;blogImg&#x2F;golang.jpg">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
   
@@ -155,46 +155,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-raspberry-ssh" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-go-panic-recover-defer" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      树莓派系统安装及设置ssh开机启动
+      golang的异常处理
     </h1>
   
 
         
-        <a href="/2020/03/11/raspberry-ssh/" class="archive-article-date">
-  	<time datetime="2020-03-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-11</time>
+        <a href="/2020/04/05/go-panic-recover-defer/" class="archive-article-date">
+  	<time datetime="2020-04-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>资源及工具</strong></p>
+        <p><img src="https://blog-static-resources.oss-cn-beijing.aliyuncs.com/blogImg/golang.jpg" alt=""></p>
+<a id="more"></a>
+
+<h2 id="panic"><a href="#panic" class="headerlink" title="panic"></a>panic</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// The panic built-in function stops normal execution of the current</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// goroutine. When a function F calls panic, normal execution of F stops</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// immediately. Any functions whose execution was deferred by F are run in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// the usual way, and then F returns to its caller. To the caller G, the</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// invocation of F then behaves like a call to panic, terminating G's</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// execution and running any deferred functions. This continues until all</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// functions in the executing goroutine have stopped, in reverse order. At</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// that point, the program is terminated with a non-zero exit code. This</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// termination sequence is called panicking and can be controlled by the</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// built-in function recover.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">panic</span><span class="params">(v <span class="keyword">interface</span>&#123;&#125;)</span></span></span></pre></td></tr></table></figure>
+
+<p>内建函数<code>panic</code>的作用是停止当前协程的正常执行。</p>
 <ul>
-<li><p>国内在官网下载系统镜像会很慢，经过搜索一番之后找到此<a href="https://www.jianshu.com/p/8446f7971d66" target="_blank" rel="noopener">高速资源</a>。</p>
+<li><p>当在函数<code>F</code>内调用<code>panic</code>时，<code>F</code>的正常执行立即停止</p>
 </li>
-<li><p>如需格式化 SD 卡可使用这款<a href="https://www.sdcard.org/downloads/index.html" target="_blank" rel="noopener">工具</a>。</p>
+<li><p>执行<code>defer</code>声明的动作，然后<code>F</code>返回其调用者（假设调用者为<code>G</code>函数）</p>
 </li>
-<li><p>使用 win32DiskImager 将系统写入 SD 卡</p>
+<li><p>此时在<code>G</code>中，对<code>F</code>的调用就如同调用<code>panic</code>，继而终止<code>G</code>的执行并且开始指定<code>defer</code></p>
+</li>
+<li><p>接下来继续向上返回，直到协程中的所有函数都被终止执行</p>
+</li>
+<li><p>程序以一个非 0 的状态码退出</p>
 </li>
 </ul>
-<p><strong>开启ssh服务</strong></p>
-<p>开机尝试<code>ssh</code>登陆，请求被拒绝，对于这个问题有一些旧答案说需要在<code>/boot</code>分区下创建一个名为<code>ssh</code>的空白文件，并尝试重<code>sshd</code>服务。而实际上新版本的系统已经不需要这样设置了，只需要开启<code>ssh</code>服务。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ systemctl start sshd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">//Unit sshd.service not found</span></pre></td></tr></table></figure>
+<p>这个终止流被称为<code>panicking</code>，可以通过内建函数<code>recover</code>来进行控制。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"main func start"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	f1()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"main func end"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"f1 func start"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">	<span class="built_in">panic</span>(<span class="string">"f1 func panic"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//main func start</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//f1 func start</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//panic: f1 func panic</span></span></pre></td></tr></table></figure>
 
-<p>这条命令会报错。树莓派系统<code>ssh</code>服务名并不是<code>sshd</code>，而是<code>ssh</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ systemctl start ssh</span></pre></td></tr></table></figure>
+<h2 id="recover"><a href="#recover" class="headerlink" title="recover"></a>recover</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// The recover built-in function allows a program to manage behavior of a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// panicking goroutine. Executing a call to recover inside a deferred</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// function (but not any function called by it) stops the panicking sequence</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// by restoring normal execution and retrieves the error value passed to the</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// call of panic. If recover is called outside the deferred function it will</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// not stop a panicking sequence. In this case, or when the goroutine is not</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// panicking, or if the argument supplied to panic was nil, recover returns</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// nil. Thus the return value from recover reports whether the goroutine is</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// panicking.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recover</span><span class="params">()</span> <span class="title">interface</span></span>&#123;&#125;</span></pre></td></tr></table></figure>
 
-<p>启动成功</p>
-<p><strong>设置ssh开机自启</strong></p>
-<p>这里只需要修改文件<code>/etc/rc.local</code>文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start  <span class="comment">#加入这一行</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 0</span></pre></td></tr></table></figure>
+<p>内建函数<code>recover</code>允许程序管理一个发生了<code>panicking</code>的协程的行为。</p>
+<p>在<code>defer</code>函数（而不是其调用的函数）中调用<code>recover</code>函数，通过恢复正常的执行来停止<code>panicking</code>序列，并检索传递给<code>panic</code>的错误值。</p>
+<p>如果在<code>defer</code>之外调用<code>recover</code>则不会停止<code>panicking</code>序列。</p>
+<p>当在协程内没有发生<code>panic</code>，或者传递给<code>panic</code>参数为<code>nil</code>，则<code>recover</code>的返回值为<code>nil</code>。</p>
+<p>因此<code>recover</code>的返回值就表明了协程是否发生了<code>panic</code>。</p>
+<p>捕获<code>panic</code>并恢复程序的正常执行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"main func start"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	f1()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"main func end"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"f1 func start"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">			fmt.Println(<span class="string">"f1 catch err: "</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">		&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	&#125;()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">//panic("f1 func panic")</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">	f2()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"f1 func end"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"f2 func start"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">			fmt.Println(<span class="string">"catch err: "</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">		&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">	&#125;()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">	<span class="built_in">panic</span>(<span class="string">"f2 func panic"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"f2 func end"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//main func start</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//f1 func start</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//f2 func start</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//catch err:  f2 func panic</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//f1 func end</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//main func end</span></span></pre></td></tr></table></figure>
+
+<p>捕捉到当前层的<code>panic</code>，恢复上一层的正常执行。</p>
+<h2 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h2><p><code>defer</code>的三个特性：</p>
+<ul>
+<li>声明<code>defer</code>时实时解析参数</li>
+<li>多个<code>defer</code>的执行顺序为先进后出</li>
+<li>可以读取并改变有名返回参数的值</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    i := <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">"i= "</span>, i)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    i += <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// i= 1</span></span></pre></td></tr></table></figure>
+
+<p>这里输出的结果为<code>i= 1</code>，因为声明<code>defer</code>时，后面的参数立即被解析，所以传入的<code>i</code>是 1，之后的增量不会被捕获到。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">"first defer"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">"second defer"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//second defer</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//first defer</span></span></pre></td></tr></table></figure>
+
+<p>先声明的<code>defer</code>后执行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    fmt.Println(f1())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span> <span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        i++</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//11</span></span></pre></td></tr></table></figure>
+
+<p><code>return</code>不是原子操作。</p>
+<p>当返回值有名时，返回值相当于引用赋值，所以可以被<code>defer</code>修改。而匿名返回值相当于拷贝赋值，不会被修改。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    fmt.Println(f1())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">var</span> i <span class="keyword">int</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        i = <span class="number">7</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    i = <span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> i</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//10</span></span></pre></td></tr></table></figure>
 
 
       
@@ -209,11 +238,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">树莓派</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">Go</a>
         		</li>
       		
 		</ul>
@@ -269,7 +294,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/11/raspberry-ssh/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:2020/04/05/go-panic-recover-defer/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -283,18 +308,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/03/12/shell-test/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          shell表达式判断
-        
-      </div>
-    </a>
   
-  
-    <a href="2020/03/09/var-expand/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">shell的变量扩展</div>
+    <a href="2020/04/04/go-new-make/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Golang中new()与make()的作用与区别</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -321,7 +337,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#panic"><span class="toc-number">1.</span> <span class="toc-text">panic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#recover"><span class="toc-number">2.</span> <span class="toc-text">recover</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer"><span class="toc-number">3.</span> <span class="toc-text">defer</span></a></li></ol>
                     </div>
                 </span>
             </div>
