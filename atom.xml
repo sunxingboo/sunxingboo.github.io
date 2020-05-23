@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="//codernote.top/"/>
-  <updated>2020-04-19T10:41:57.189Z</updated>
+  <updated>2020-05-23T07:24:21.905Z</updated>
   <id>//codernote.top/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker启动mysql8.0服务遇到的问题记录</title>
+    <link href="2020/05/20/docker-mysql8.0/"/>
+    <id>2020/05/20/docker-mysql8.0/</id>
+    <published>2020-05-19T16:00:00.000Z</published>
+    <updated>2020-05-23T07:24:21.905Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://blog-static-resources.oss-cn-beijing.aliyuncs.com/blogImg/docker.jpg" alt=""></p><a id="more"></a><p>启动容器</p><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker run -p <span class="number">3306</span>:<span class="number">3306</span> --name mysql-server \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-v /data/mysql/<span class="symbol">conf:</span>/etc/mysql \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">-v /data/mysql/<span class="symbol">logs:</span>/var/log/mysql \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">-v /data/mysql/<span class="symbol">data:</span>/var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">-v  /data/mysql/mysql-<span class="symbol">files:</span>/var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span>-<span class="title">files</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">-e MYSQL_ROOT_PASSWORD= \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">-d mysql</span></pre></td></tr></table></figure><p>此时可能从外部无法连接容器内的mysql</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">alter<span class="built_in"> user </span><span class="string">'root'</span>@<span class="string">'%'</span> identified with mysql_native_password by <span class="string">'password'</span>;</span></pre></td></tr></table></figure><p>可能遇到如下问题或其他错误：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Access denied <span class="keyword">for</span><span class="built_in"> user </span><span class="string">'root'</span>@<span class="string">'localhost'</span> (using password: <span class="literal">YES</span>)</span></pre></td></tr></table></figure><p>解决方法</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">update<span class="built_in"> user </span><span class="builtin-name">set</span> authentication_string = <span class="string">'root'</span> where<span class="built_in"> user </span>= <span class="string">'root'</span> <span class="keyword">and</span> host = <span class="string">'%'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">update<span class="built_in"> user </span><span class="builtin-name">set</span> authentication_string = <span class="string">'root'</span> where<span class="built_in"> user </span>= <span class="string">'root'</span> <span class="keyword">and</span> host = <span class="string">'localhost'</span>;</span></pre></td></tr></table></figure><p>使用<code>sequel pro</code>进行连接时，报如下错误：</p><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">MySQL <span class="string">said:</span> Authentication plugin <span class="string">'caching_sha2_password'</span> cannot be <span class="string">loaded:</span> dlopen(<span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>lib<span class="regexp">/plugin/</span>caching_sha2_password.so, <span class="number">2</span>): image not found</span></pre></td></tr></table></figure><p>原因</p><p>mysql8之前的版本中加密规则是<code>mysql_native_password</code>，而mysql8之后，加密规则是<code>caching_sha2_password</code>，而数据库客户端无对应的驱动。</p><p>解决方法</p><p>登录到容器中，修改加密规则并更新用户密码，刷新权限。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;password&#39; PASSWORD EXPIRE NEVER;   #修改加密规则 </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;password&#39;;   #更新一下用户的密码</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;   #刷新权限</span></pre></td></tr></table></figure><p>此时再次尝试连接，成功。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://blog-static-resources.oss-cn-beijing.aliyuncs.com/blogImg/docker.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="docker" scheme="//codernote.top/tags/docker/"/>
+    
+      <category term="mysql" scheme="//codernote.top/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>go mod的使用</title>

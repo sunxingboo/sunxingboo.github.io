@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>2020/05/20/docker-mysql8.0/</loc>
+    
+    <lastmod>2020-05-23T07:24:21.905Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>2020/04/19/go-mod/</loc>
     
     <lastmod>2020-04-19T10:41:57.189Z</lastmod>
@@ -149,14 +156,14 @@
   </url>
   
   <url>
-    <loc>baidu_verify_A0BCVY6uXW.html</loc>
+    <loc>google2bb66ed419f131eb.html</loc>
     
     <lastmod>2020-01-11T08:50:19.199Z</lastmod>
     
   </url>
   
   <url>
-    <loc>google2bb66ed419f131eb.html</loc>
+    <loc>baidu_verify_A0BCVY6uXW.html</loc>
     
     <lastmod>2020-01-11T08:50:19.199Z</lastmod>
     

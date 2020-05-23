@@ -6,17 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//codernote.top">
-  <title>shell的变量扩展 | 码农笔记</title>
+  <title>Archives: 2020/5 | 码农笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基本扩展1$ val&#x3D;test2$ echo $val3test4$ echo $&amp;#123;val&amp;#125;15test1  ${val}的形式可以明确界定变量名范围，比如上例用于拼接字符串。">
-<meta name="keywords" content="Linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="shell的变量扩展">
-<meta property="og:url" content="2020&#x2F;03&#x2F;09&#x2F;var-expand&#x2F;index.html">
+  <meta name="description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
+<meta name="keywords" content="后端,Linux,算法,数据结构,前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+<meta property="og:type" content="website">
+<meta property="og:title" content="码农笔记">
+<meta property="og:url" content="archives&#x2F;2020&#x2F;05&#x2F;index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="基本扩展1$ val&#x3D;test2$ echo $val3test4$ echo $&amp;#123;val&amp;#125;15test1  ${val}的形式可以明确界定变量名范围，比如上例用于拼接字符串。">
+<meta property="og:description" content="毕业于中国民航大学12级，机械电子工程专业，毕业后从事了两年民航机务维修，现在是一枚后端开发。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-09T08:25:47.456Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="码农笔记" type="application/atom+xml">
@@ -155,232 +154,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-var-expand" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      shell的变量扩展
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/05/20/docker-mysql8.0/" class="archive-article-date">
+  	<time datetime="2020-05-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/05/20/docker-mysql8.0/">docker启动mysql8.0服务遇到的问题记录</a>
     </h1>
   
 
-        
-        <a href="/2020/03/09/var-expand/" class="archive-article-date">
-  	<time datetime="2020-03-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="基本扩展"><a href="#基本扩展" class="headerlink" title="基本扩展"></a>基本扩展</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ val=<span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;val&#125;</span>1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">test1</span></pre></td></tr></table></figure>
-
-<p><code>${val}</code>的形式可以明确界定变量名范围，比如上例用于拼接字符串。</p>
-<a id="more"></a>
-
-<h2 id="空变量的扩展"><a href="#空变量的扩展" class="headerlink" title="空变量的扩展"></a>空变量的扩展</h2><p><code>${val1:-val2}</code>，当<code>val1</code>未定义或为空时，将其扩展为<code>val2</code>的值，但并不改变<code>val1</code>；若<code>val1</code>已定义且非空，则扩展为<code>val1</code>的值。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val1</span> 	<span class="comment">#val1未定义</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;val1:-"test"&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val1</span>  <span class="comment">#仍为空</span></span></pre></td></tr></table></figure>
-
-
-
-<p><code>${val1:=val2}</code>，当<code>val1</code>未定义或为空时，将其扩展为<code>val2</code>的值，并且将<code>val2</code>的值赋给<code>val1</code>；若<code>val1</code>已定义且非空，则扩展为<code>val1</code>的值。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val1</span> 	<span class="comment">#val1未定义</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;val1:-"test"&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val1</span>  <span class="comment">#val1被设为test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr></table></figure>
-
-<p><em>注意：这种方式不能给位置参数以及其他特殊参数赋值</em></p>
-<p><code>${val1:?val2}</code>，当<code>val1</code>未定义或为空时，将<code>val2</code>的值输出到标准错误；若<code>val1</code>已定义且非空，则扩展为<code>val1</code>的值。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;val1:?"val1 is empty"&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-bash: val1: val1 is empty</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $?</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">1</span></pre></td></tr></table></figure>
-
-
-
-<p><code>${val1:+val2}</code>，当<code>val1</code>未定义或为空时，不进行扩展；若<code>val1</code>已定义且非空，则将其扩展为<code>val2</code>的值，并且不改变<code>val1</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#空</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;val1:+"test2"&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#空</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ val1=test1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;val1:+"test2"&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">test2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$val1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">test1 	<span class="comment">#val1的值没有改变</span></span></pre></td></tr></table></figure>
-
-<h2 id="返回变量名扩展"><a href="#返回变量名扩展" class="headerlink" title="返回变量名扩展"></a>返回变量名扩展</h2><p><code>${!word*}</code>与<code>${!word@}</code>，这两种形式的作用相同，返回以<code>word</code>为开头的所有变量名。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;!val*&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">val1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ val2=test2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;!val@&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">val1 val2</span></pre></td></tr></table></figure>
-
-<h2 id="更多字符串扩展"><a href="#更多字符串扩展" class="headerlink" title="更多字符串扩展"></a>更多字符串扩展</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># $&#123;#str&#125;，其作用是扩展为`str`变量包含的字符串长度。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;#val&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ val=<span class="built_in">test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;#val&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">4</span></pre></td></tr></table></figure>
-
-
-
-<p><code>${str:offset:length}</code>，其作用为，从索引<code>offset</code>处开始截取<code>str</code>，截取长度为<code>length</code>，如过没有设置<code>length</code>，则一直截取到末尾。</p>
-<p>如果<code>offset</code>为负数，则从字符串末尾倒数<code>offset</code>开始进行截取，并且在<code>offset</code>前必须添加一个空格，否则会被混淆为<code>${str:-&quot;val&quot;}</code>这种扩展形式。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ str=<span class="string">"test string"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str:2&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">st string</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str:2:4&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">st s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str: -5:3&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">tri</span></pre></td></tr></table></figure>
-
-<p>如果参数是<code>@</code>，扩展的结果是从<code>offset</code>开始，<code>length</code>为位置参数。</p>
-<p><code>${str#pattern}</code>与<code>${str##pattern}</code>，作用为从<em>字符串开头</em>开始去除字符串<code>str</code>中满足模式<code>pattern</code>的部分，这两种方式的区别是<code>#</code>去除最短匹配，而<code>##</code>去除最长匹配。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ str=<span class="string">"test.tar.gz"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str#*.&#125;</span>		<span class="comment">#去除最短匹配</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">tar.gz</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str##*.&#125;</span>		<span class="comment">#去除最长匹配</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">gz</span></pre></td></tr></table></figure>
-
-
-
-<p><code>${str%pattern}</code>与<code>${str%%pattern}</code>，作用为从<em>字符串末尾</em>开始去除字符串<code>str</code>中满足模式<code>pattern</code>的部分，这两种方式的区别是<code>%</code>去除最短匹配，而<code>%%</code>去除最长匹配。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ str=<span class="string">"test.tar.gz"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str%.*&#125;</span>		<span class="comment">#去除最短匹配</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">test.tar</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str%%.*&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span></span></pre></td></tr></table></figure>
-
-
-
-<p><code>${str/pattern/replace}</code>，其作用为将字符串<code>str</code>中第一个符合<code>pattern</code>模式匹配的部分替换为<code>replace</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ str=<span class="string">"test.txt.txt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str/test/new-name&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">new-name.txt.txt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str/txt/suffix&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">test.suffix.txt</span></pre></td></tr></table></figure>
-
-<p><code>${str//pattern/replace}</code>，其作用为将字符串<code>str</code>中所有符合<code>pattern</code>模式匹配的部分替换为<code>replace</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str//txt/suffix&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">test.suffix.suffix</span></pre></td></tr></table></figure>
-
-<p><code>${str/#pattern/replace}</code>，<code>/#</code>的形式要求匹配出现在字符串开头。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str/#txt/suffix&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">test.txt.txt		<span class="comment">#txt不在字符串开头，所以没有替换</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str/#test/new-name&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">new-name.txt.txt</span></pre></td></tr></table></figure>
-
-<p><code>${str/%pattern/replace}</code>，<code>/%</code>的形式要求匹配出现在字符串末尾。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str/%test/new-name&#125;</span>	</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">test.txt.txt		<span class="comment">#test不在字符串末尾，所以没有替换</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;str/%txt/suffix&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">test.txt.suffix</span></pre></td></tr></table></figure>
-
-<p>如果不设置<code>replace</code>，这四种形式的扩展将去掉满足匹配模式<code>pattern</code>的部分。</p>
-<h2 id="数值的扩展"><a href="#数值的扩展" class="headerlink" title="数值的扩展"></a>数值的扩展</h2><p>数值计算的扩展使用<code>$(())</code>或<code>$[]</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $((1+2*3))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">7</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $[1+2*3]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">7</span></pre></td></tr></table></figure>
-
-<p>进制转换</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $((2<span class="comment">#1111))</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">15</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $((16<span class="comment">#ab))</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">171</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> $[2<span class="comment">#1111]		#不支持进制转换</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">-bash: $: 未找到命令</span></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">docker</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:2020/03/09/var-expand/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="2020/03/11/raspberry-ssh/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          树莓派系统安装及设置ssh开机启动
-        
-      </div>
-    </a>
   
   
-    <a href="2020/03/08/position-param/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">shell位置参数</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本扩展"><span class="toc-number">1.</span> <span class="toc-text">基本扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空变量的扩展"><span class="toc-number">2.</span> <span class="toc-text">空变量的扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#返回变量名扩展"><span class="toc-number">3.</span> <span class="toc-text">返回变量名扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多字符串扩展"><span class="toc-number">4.</span> <span class="toc-text">更多字符串扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值的扩展"><span class="toc-number">5.</span> <span class="toc-text">数值的扩展</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -403,8 +234,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
