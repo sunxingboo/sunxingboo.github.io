@@ -156,6 +156,168 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-etcd" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/08/etcd/">etcd简单服务搭建方式记录</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/08/etcd/" class="archive-article-date">
+  	<time datetime="2020-07-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>启动三个节点</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">sudo docker run -d -p 2379:2379 -p 2380:2380 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-<span class="ruby">-restart=always \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--net etcdnet \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--ip <span class="number">192.167</span>.<span class="number">0</span>.<span class="number">168</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--name etcd<span class="number">0</span> quay.io/coreos/etcd /usr/local/bin/etcd \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--name autumn-client<span class="number">0</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-advertise-client-urls <span class="symbol">http:</span>/<span class="regexp">/192.167.0.168:2379 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-listen-client-urls <span class="symbol">http:</span>/<span class="regexp">/0.0.0.0:2379 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-advertise-peer-urls <span class="symbol">http:</span>/<span class="regexp">/192.167.0.168:2380 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-listen-peer-urls <span class="symbol">http:</span>/<span class="regexp">/0.0.0.0:2380 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster-token etcd-cluster \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster autumn-client<span class="number">0</span>=<span class="symbol">http:</span>/<span class="regexp">/192.167.0.168:2380,autumn-client1=http:/</span><span class="regexp">/192.167.0.170:2480,autumn-client2=http:/</span><span class="regexp">/192.167.0.172:2580 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster-state new</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">sudo docker run -d -p <span class="number">2479</span><span class="symbol">:</span><span class="number">2479</span> -p <span class="number">2480</span><span class="symbol">:</span><span class="number">2480</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--restart=always \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--net etcdnet \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--ip <span class="number">192.167</span>.<span class="number">0</span>.<span class="number">170</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--name etcd1 quay.io/coreos/etcd /usr/local/bin/etcd \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--name autumn-client1 \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-advertise-client-urls <span class="symbol">http:</span>/<span class="regexp">/192.167.0.170:2479 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-listen-client-urls <span class="symbol">http:</span>/<span class="regexp">/0.0.0.0:2479 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-advertise-peer-urls <span class="symbol">http:</span>/<span class="regexp">/192.167.0.170:2480 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-listen-peer-urls <span class="symbol">http:</span>/<span class="regexp">/0.0.0.0:2480 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster-token etcd-cluster \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster autumn-client<span class="number">0</span>=<span class="symbol">http:</span>/<span class="regexp">/192.167.0.168:2380,autumn-client1=http:/</span><span class="regexp">/192.167.0.170:2480,autumn-client2=http:/</span><span class="regexp">/192.167.0.172:2580 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster-state new</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">sudo docker run -d -p <span class="number">2579</span><span class="symbol">:</span><span class="number">2579</span> -p <span class="number">2580</span><span class="symbol">:</span><span class="number">2580</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--restart=always \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--net etcdnet \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--ip <span class="number">192.167</span>.<span class="number">0</span>.<span class="number">172</span> \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--name etcd2 quay.io/coreos/etcd /usr/local/bin/etcd \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">--name autumn-client2 \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-advertise-client-urls <span class="symbol">http:</span>/<span class="regexp">/192.167.0.172:2579 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-listen-client-urls <span class="symbol">http:</span>/<span class="regexp">/0.0.0.0:2579 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-advertise-peer-urls <span class="symbol">http:</span>/<span class="regexp">/192.167.0.172:2580 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-listen-peer-urls <span class="symbol">http:</span>/<span class="regexp">/0.0.0.0:2580 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster-token etcd-cluster \</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster autumn-client<span class="number">0</span>=<span class="symbol">http:</span>/<span class="regexp">/192.167.0.168:2380,autumn-client1=http:/</span><span class="regexp">/192.167.0.170:2480,autumn-client2=http:/</span><span class="regexp">/192.167.0.172:2580 \</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line"><span class="ruby">-initial-cluster-state new</span></span></pre></td></tr></table></figure>
+
+<p>两种管理后台</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker run -d --name etcd-browser <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-p <span class="number">8000</span>:<span class="number">8000</span> <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">--net etcdnet <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">--env ETCD_HOST=<span class="number">192.167</span>.<span class="number">0.168</span> <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">--env ETCD_PORT=<span class="number">2379</span> <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">buddho/etcd-browser</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">docker run -<span class="literal">it</span> -d --name etcdkeeper <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">-p <span class="number">8001</span>:<span class="number">8080</span> <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">--net etcdnet <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">--env ETCDCTL_API=<span class="number">3</span> <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">--env ETCD_ENDPOINTS=<span class="string">"http://192.167.0.168:2379,http://192.167.0.170:2479,http://192.167.0.172:2579"</span> <span class="string">\</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">deltaprojects/etcdkeeper</span></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">etcd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/08/etcd/">Read More >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-golang-build" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/07/golang-build/">Golang多平台交叉编译</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/07/golang-build/" class="archive-article-date">
+  	<time datetime="2020-07-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Mac 下编译 Linux 和 Windows 64位可执行程序</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">CGO_ENABLED</span>=0 <span class="attribute">GOOS</span>=linux <span class="attribute">GOARCH</span>=amd64 go build main.go</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">CGO_ENABLED</span>=0 <span class="attribute">GOOS</span>=windows <span class="attribute">GOARCH</span>=amd64 go build main.go</span></pre></td></tr></table></figure>
+
+<p>Linux 下编译 Mac 和 Windows 64位可执行程序</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">CGO_ENABLED</span>=0 <span class="attribute">GOOS</span>=darwin <span class="attribute">GOARCH</span>=amd64 go build main.go</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">CGO_ENABLED</span>=0 <span class="attribute">GOOS</span>=windows <span class="attribute">GOARCH</span>=amd64 go build main.go</span></pre></td></tr></table></figure>
+
+<p>Windows 下编译 Mac 和 Linux 64位可执行程序</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">SET</span> <span class="attribute">CGO_ENABLED</span>=0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">SET</span> <span class="attribute">GOOS</span>=darwin</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">SET</span> <span class="attribute">GOARCH</span>=amd64</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">go build main.go</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">SET</span> <span class="attribute">CGO_ENABLED</span>=0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">SET</span> <span class="attribute">GOOS</span>=linux</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">SET</span> <span class="attribute">GOARCH</span>=amd64</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">go build main.go</span></pre></td></tr></table></figure>
+
+<p>GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）<br>GOARCH：目标平台的体系架构（386、amd64、arm）<br>交叉编译不支持 CGO 所以要禁用它</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/07/golang-build/">Read More >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-docker-mysql8.0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -796,166 +958,6 @@
 
 
   
-    <article id="post-mysql-index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/17/mysql-index/">MySQL索引笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/17/mysql-index/" class="archive-article-date">
-  	<time datetime="2020-03-16T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>提到索引，就会看到诸如聚簇索引、非聚簇索引、主键索引、唯一索引、普通索引、哈希索引、全文索引、B树索引……经常搞混，特此整理一篇索引笔记以供查阅。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/17/mysql-index/">Read More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-linux-setuid-setgid-setbit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/13/linux-setuid-setgid-setbit/">Linux下的SUID、SGID、SBIT权限设置与作用</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/13/linux-setuid-setgid-setbit/" class="archive-article-date">
-  	<time datetime="2020-03-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h2><p><code>SUID</code>只能对文件设置</p>
-<ul>
-<li>只对二进制可执行文件有效</li>
-<li>执行者对文件有<code>x</code>权限，在执行此程序期间获取到程序所有者的身份</li>
-</ul>
-<p>普通的文件权限</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-rwxrwxr-x</span></span></pre></td></tr></table></figure>
-
-<p>设置了<code>SUID</code>位的文件权限，拥有者的<code>x</code>变为<code>s</code>。</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="deletion">-rwsrwxr-x</span></span></pre></td></tr></table></figure>
-
-<p>设置方法</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">chmod <span class="number">4</span>xxx &lt;name&gt;</span></pre></td></tr></table></figure>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/13/linux-setuid-setgid-setbit/">Read More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next</a>
@@ -1078,10 +1080,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">TCP</a>
               </li>
              
@@ -1098,7 +1096,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">Go</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">etcd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Golang</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1107,10 +1117,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">JavaScript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1123,6 +1129,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">MySQL</a>
               </li>
             
             <div class="clearfix"></div>
