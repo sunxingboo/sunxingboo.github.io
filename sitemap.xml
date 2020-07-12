@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>2020/07/03/tree-traversal/</loc>
+    
+    <lastmod>2020-07-12T04:24:13.185Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>2020/03/09/var-expand/</loc>
+    
+    <lastmod>2020-07-12T03:12:14.050Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>2020/04/19/go-mod/</loc>
     
     <lastmod>2020-07-08T15:42:15.318Z</lastmod>
@@ -96,13 +110,6 @@
     <loc>2020/03/11/raspberry-ssh/</loc>
     
     <lastmod>2020-03-11T08:42:37.343Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>2020/03/09/var-expand/</loc>
-    
-    <lastmod>2020-03-09T08:25:47.456Z</lastmod>
     
   </url>
   
